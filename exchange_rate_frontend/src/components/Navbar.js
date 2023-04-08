@@ -28,19 +28,19 @@ function Navbar() {
       <ul className={active}>
         <li className="nav-item">
           <a href="/" className="nav-text nav-item">
-            Current Rates
+            Home
           </a>
         </li>
         <div className="vertical-line"></div>
         <li className="nav-item">
-          <a href="/browse-listings" className="nav-text nav-item">
+          <a href="/statistics" className="nav-text nav-item">
             Statistics
           </a>
         </li>
         <div className="vertical-line"></div>
 
         <li className="nav-item">
-          <a href="/create-listing" className="nav-text">
+          <a href="/exchange-service" className="nav-text">
             Exchange Service
           </a>
         </li>
