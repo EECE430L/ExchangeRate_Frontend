@@ -1,0 +1,89 @@
+ul {
+  margin-bottom: 0rem !important;
+  color: rgb(0, 33, 65);
+}
+
+.nav-text {
+  font-size: 2rem;
+  font-family: "Merriweather", serif;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: rgb(255, 255, 255) !important;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 8vh;
+  background: rgb(0, 33, 65);
+  margin: 0;
+  box-sizing: border-box;
+}
+.nav-brand {
+  font-weight: bold !important;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3rem;
+}
+.nav-toggler {
+  display: none;
+}
+.nav-toggler div {
+  width: 2.5rem;
+  height: 0.2rem;
+  margin: 0.4rem;
+  background: rgb(204, 204, 204);
+  transition: 0.3s ease-in;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-toggler {
+    display: block;
+    cursor: pointer;
+  }
+  .nav-menu {
+    position: fixed;
+    top: 7vh;
+    right: 0;
+    height: 93vh;
+    width: 50vw;
+    background: rgb(0, 33, 65);
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: 0.5s ease-in;
+  }
+}
+/* Active Class */
+.nav-active {
+  transform: translateX(0%);
+}
+
+/* Toggle Icon Animation */
+
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-4px, 9px);
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotate(45deg) translate(-4px, -9px);
+}
+
+.sign-in-button {
+  background-color: rgb(0, 33, 65) !important;
+  border-color: white !important;
+  width: 6vw;
+  height: 5vh;
+}
+
+.sign-in-button:hover {
+  background-color: rgb(1, 74, 148) !important;
+}
