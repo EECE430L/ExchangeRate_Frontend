@@ -68,199 +68,172 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <>
       <Navbar />
-      <AppBar position="static">
-        <Toolbar classes={{ root: "nav" }}>
-          <div>
-            {userToken !== null ? (
-              <Button color="inherit">Logout</Button>
-            ) : (
-              <div>
-                <Button
-                  color="inherit"
-                  // onClick={() => setAuthState(States.USER_CREATION)}
-                >
-                  Register
-                </Button>
-                <Button
-                  color="inherit"
-                  // onClick={() => setAuthState(States.USER_LOG_IN)}
-                >
-                  Login
-                </Button>
-              </div>
-            )}
-          </div>
-        </Toolbar>
-      </AppBar>
+      <div className="App">
+        <Snackbar
+          elevation={6}
+          variant="filled"
+          open={authState === States.USER_AUTHENTICATED}
+          autoHideDuration={2000}
+          onClose={() => setAuthState(States.PENDING)}
+        >
+          <Alert severity="success">Success</Alert>
+        </Snackbar>
 
-      <Snackbar
-        elevation={6}
-        variant="filled"
-        open={authState === States.USER_AUTHENTICATED}
-        autoHideDuration={2000}
-        onClose={() => setAuthState(States.PENDING)}
-      >
-        <Alert severity="success">Success</Alert>
-      </Snackbar>
+        <div className="wrapper">
+          <h2>Today's Exchange Rate</h2>
+          <p>LBP to USD Exchange Rate</p>
+          <h3>
+            Buy USD:
+            <span id="buy-usd-rate">
+              &nbsp;
+              {!buyUsdRate ? "Not available yet" : buyUsdRate.toFixed(2)}
+            </span>
+          </h3>
+          <h3>
+            Sell USD:
+            <span id="sell-usd-rate">
+              &nbsp;
+              {!sellUsdRate ? "Not available yet" : sellUsdRate.toFixed(2)}
+            </span>
+          </h3>
 
-      <div className="header">
-        <h1>Current Exchange Rates</h1>
+          <hr />
+
+          <h2>Convert values based on current rates</h2>
+          <form name="transaction-entry">
+            <div className="amount-input">
+              <label htmlFor="lbp-amount">LBP Amount</label>
+              <input
+                id="lbp-amount"
+                type="number"
+                value={calculatorLbpValue}
+                onChange={(e) => setCalculatorLbpValue(e.target.value)}
+              />
+              <label htmlFor="usd-amount">USD Amount</label>
+              <input
+                id="usd-amount"
+                type="number"
+                value={calculatorUsdValue}
+                onChange={(e) => setCalculatorUsdValue(e.target.value)}
+              />
+            </div>
+            <Select
+              id="conversion-type"
+              value={conversionType}
+              onChange={(e) => setConversionType(e.target.value)}
+            >
+              <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
+              <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
+            </Select>
+            <Button
+              id="add-button"
+              className="button"
+              type="button"
+              onClick={convertItem}
+              variant="contained"
+              sx={{
+                bgcolor: "blue",
+                color: "white",
+                "&:hover": {
+                  bgcolor: "white",
+                  color: "blue",
+                  borderColor: "blue",
+                },
+              }}
+            >
+              Convert
+            </Button>
+            <Button
+              id="clear-button"
+              className="button"
+              type="button"
+              onClick={() => {
+                setCalculatorUsdValue("");
+                setCalculatorLbpValue("");
+              }}
+              variant="contained"
+              sx={{
+                bgcolor: "blue",
+                color: "white",
+                "&:hover": {
+                  bgcolor: "white",
+                  color: "blue",
+                  borderColor: "blue",
+                },
+              }}
+            >
+              Clear
+            </Button>
+          </form>
+        </div>
+        <div className="wrapper">
+          <h2>Record a recent transaction</h2>
+          <form name="transaction-entry">
+            <div className="amount-input">
+              <label htmlFor="lbp-amount">LBP Amount</label>
+              <input
+                id="lbp-amount"
+                type="number"
+                value={lbpInput}
+                onChange={(e) => setLbpInput(e.target.value)}
+              />{" "}
+              <label htmlFor="usd-amount">USD Amount</label>
+              <input
+                id="usd-amount"
+                type="number"
+                value={usdInput}
+                onChange={(e) => setUsdInput(e.target.value)}
+              />
+            </div>
+            <Select
+              id="transaction-type"
+              value={transactionType}
+              onChange={(e) => setTransactionType(e.target.value)}
+            >
+              <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
+              <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
+            </Select>
+            <Button
+              id="add-button"
+              className="button"
+              type="button"
+              onClick={addItem}
+              variant="contained"
+              sx={{
+                bgcolor: "blue",
+                color: "white",
+                "&:hover": {
+                  bgcolor: "white",
+                  color: "blue",
+                  borderColor: "blue",
+                },
+              }}
+            >
+              Add
+            </Button>
+          </form>
+          {userToken && (
+            <div className="wrapper">
+              <Typography variant="h5">Your Transactions</Typography>
+              <DataGrid
+                rows={userTransactions}
+                columns={[
+                  { field: "usd_to_lbp", headerName: "USD to LBP", flex: 1 },
+                  { field: "usd_amount", headerName: "USD Amount", flex: 1 },
+                  { field: "lbp_amount", headerName: "LBP Amount", flex: 1 },
+                  { field: "added_date", headerName: "Added Date", flex: 1 },
+                ]}
+                autoHeight
+                hideScrollbar={true}
+                hideFooter={true}
+              />
+            </div>
+          )}
+        </div>
       </div>
-
-      <div className="wrapper">
-        <h2>Today's Exchange Rate</h2>
-        <p>LBP to USD Exchange Rate</p>
-        <h3>
-          Buy USD:
-          <span id="buy-usd-rate">
-            &nbsp;
-            {!buyUsdRate ? "Not available yet" : buyUsdRate.toFixed(2)}
-          </span>
-        </h3>
-        <h3>
-          Sell USD:
-          <span id="sell-usd-rate">
-            &nbsp;
-            {!sellUsdRate ? "Not available yet" : sellUsdRate.toFixed(2)}
-          </span>
-        </h3>
-
-        <hr />
-
-        <h2>Convert values based on current rates</h2>
-        <form name="transaction-entry">
-          <div className="amount-input">
-            <label htmlFor="lbp-amount">LBP Amount</label>
-            <input
-              id="lbp-amount"
-              type="number"
-              value={calculatorLbpValue}
-              onChange={(e) => setCalculatorLbpValue(e.target.value)}
-            />
-            <label htmlFor="usd-amount">USD Amount</label>
-            <input
-              id="usd-amount"
-              type="number"
-              value={calculatorUsdValue}
-              onChange={(e) => setCalculatorUsdValue(e.target.value)}
-            />
-          </div>
-          <Select
-            id="conversion-type"
-            value={conversionType}
-            onChange={(e) => setConversionType(e.target.value)}
-          >
-            <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
-            <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
-          </Select>
-          <Button
-            id="add-button"
-            className="button"
-            type="button"
-            onClick={convertItem}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Convert
-          </Button>
-          <Button
-            id="clear-button"
-            className="button"
-            type="button"
-            onClick={() => {
-              setCalculatorUsdValue("");
-              setCalculatorLbpValue("");
-            }}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Clear
-          </Button>
-        </form>
-      </div>
-      <div className="wrapper">
-        <h2>Record a recent transaction</h2>
-        <form name="transaction-entry">
-          <div className="amount-input">
-            <label htmlFor="lbp-amount">LBP Amount</label>
-            <input
-              id="lbp-amount"
-              type="number"
-              value={lbpInput}
-              onChange={(e) => setLbpInput(e.target.value)}
-            />{" "}
-            <label htmlFor="usd-amount">USD Amount</label>
-            <input
-              id="usd-amount"
-              type="number"
-              value={usdInput}
-              onChange={(e) => setUsdInput(e.target.value)}
-            />
-          </div>
-          <Select
-            id="transaction-type"
-            value={transactionType}
-            onChange={(e) => setTransactionType(e.target.value)}
-          >
-            <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
-            <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
-          </Select>
-          <Button
-            id="add-button"
-            className="button"
-            type="button"
-            onClick={addItem}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Add
-          </Button>
-        </form>
-        {userToken && (
-          <div className="wrapper">
-            <Typography variant="h5">Your Transactions</Typography>
-            <DataGrid
-              rows={userTransactions}
-              columns={[
-                { field: "usd_to_lbp", headerName: "USD to LBP", flex: 1 },
-                { field: "usd_amount", headerName: "USD Amount", flex: 1 },
-                { field: "lbp_amount", headerName: "LBP Amount", flex: 1 },
-                { field: "added_date", headerName: "Added Date", flex: 1 },
-              ]}
-              autoHeight
-              hideScrollbar={true}
-              hideFooter={true}
-            />
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 

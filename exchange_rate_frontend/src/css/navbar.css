@@ -3,17 +3,9 @@ ul {
   color: rgb(0, 33, 65);
 }
 
-.nav-text {
-  font-size: 2rem;
-  font-family: "Merriweather", serif;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: rgb(255, 255, 255) !important;
-}
-
 .nav {
+  align-items: center;
+  justify-content: center;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -21,9 +13,31 @@ ul {
   background: rgb(0, 33, 65);
   margin: 0;
   box-sizing: border-box;
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
+
+.nav-text {
+  font-family: "Roboto Slab", serif;
+  color: rgb(255, 255, 255) !important;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 13%;
+  height: auto;
+  padding-left: 5px;
+}
+
 .nav-brand {
+  font-size: 2rem;
+
   font-weight: bold !important;
+}
+
+.nav-item {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
 }
 
 .nav-menu {
@@ -32,9 +46,11 @@ ul {
   justify-content: space-around;
   gap: 3rem;
 }
+
 .nav-toggler {
   display: none;
 }
+
 .nav-toggler div {
   width: 2.5rem;
   height: 0.2rem;
@@ -60,13 +76,12 @@ ul {
     transition: 0.5s ease-in;
   }
 }
-/* Active Class */
+
 .nav-active {
   transform: translateX(0%);
 }
 
 /* Toggle Icon Animation */
-
 .toggle .line1 {
   transform: rotate(-45deg) translate(-4px, 9px);
 }
@@ -78,6 +93,8 @@ ul {
 }
 
 .sign-in-button {
+  color: white;
+  font-family: "Roboto Slab", serif;
   background-color: rgb(0, 33, 65) !important;
   border-color: white !important;
   width: 6vw;
@@ -86,4 +103,12 @@ ul {
 
 .sign-in-button:hover {
   background-color: rgb(1, 74, 148) !important;
+}
+
+.vertical-line {
+  border-right: 1px solid #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-bottom: 30px;
+  margin-bottom: 12px;
 }

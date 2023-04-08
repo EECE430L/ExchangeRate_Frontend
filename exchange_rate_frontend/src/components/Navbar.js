@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/navbar.css";
 import Button from "react-bootstrap/Button";
+import logo from "../media/icon.png";
 
 function Navbar() {
   const [active, setActive] = useState("nav-menu");
@@ -20,22 +21,26 @@ function Navbar() {
   };
   return (
     <nav className="nav">
-      <a href="/" className="nav-brand nav-link nav-text">
+      <a href="/" className="nav-brand nav-text">
         InflateRates
+        <img className="logo-icon" src={logo} alt="Logo" />
       </a>
       <ul className={active}>
-        <li className="home-button">
-          <a href="/" className="nav-link nav-text">
+        <li className="nav-item">
+          <a href="/" className="nav-text nav-item">
             Current Rates
           </a>
         </li>
+        <div className="vertical-line"></div>
         <li className="nav-item">
-          <a href="/browse-listings" className="nav-link nav-text">
+          <a href="/browse-listings" className="nav-text nav-item">
             Statistics
           </a>
         </li>
+        <div className="vertical-line"></div>
+
         <li className="nav-item">
-          <a href="/create-listing" className="nav-link nav-text">
+          <a href="/create-listing" className="nav-text">
             Exchange Service
           </a>
         </li>
