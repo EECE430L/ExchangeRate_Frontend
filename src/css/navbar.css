@@ -38,6 +38,7 @@ ul {
 .nav-item {
   font-size: 1.6rem;
   margin-bottom: 15px;
+  white-space: nowrap;
 }
 
 .nav-menu {
@@ -81,7 +82,6 @@ ul {
   transform: translateX(0%);
 }
 
-/* Toggle Icon Animation */
 .toggle .line1 {
   transform: rotate(-45deg) translate(-4px, 9px);
 }
@@ -99,6 +99,9 @@ ul {
   border-color: white !important;
   width: 6vw;
   height: 5vh;
+  min-width: 70px;
+  min-height: 34px;
+  white-space: nowrap;
 }
 
 .sign-in-button:hover {

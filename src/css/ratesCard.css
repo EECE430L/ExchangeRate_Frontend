@@ -1,0 +1,38 @@
+.exchange-card {
+  width: 200px;
+  height: 120px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+h2.remove-whitespace {
+  margin: 0;
+  padding: 0;
+}
+
+.exchange-card-header {
+  display: flex;
+  align-items: flex-start;
+  white-space: nowrap;
+}
+
+.exchange-card-body {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.flag {
+  width: 13%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 50px;
+}

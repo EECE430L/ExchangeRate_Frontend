@@ -16,6 +16,7 @@ import {
   saveUserToken,
   clearUserToken,
 } from "../utility/localStorage";
+import RatesCard from "../components/RatesCard";
 
 function Home() {
   const States = {
@@ -79,7 +80,10 @@ function Home() {
       </Snackbar>
 
       <div className="wrapper">
-        <h2>Today's Exchange Rate</h2>
+        <h2>
+          Today's Exchange Rates
+          <RatesCard rate={1.11}> </RatesCard>
+        </h2>
         <p>LBP to USD Exchange Rate</p>
         <h3>
           Buy USD:

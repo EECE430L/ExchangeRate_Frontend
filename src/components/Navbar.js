@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
 
 function Navbar() {
+  //navbar style, css and responsiveness animation inspired by an old project I did
   const [active, setActive] = useState("nav-menu");
   const [icon, setIcon] = useState("nav-toggler");
   const isLoggedIn =
