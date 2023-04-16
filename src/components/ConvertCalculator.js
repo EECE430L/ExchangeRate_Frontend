@@ -53,21 +53,27 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
     };
 
     const handleConvertClick = () => {
-
+        if (!convertValue.trim()) {
+            return;
+        }
         if (conversionType === transactionType.UsdToLbp) {
             setResultValue((parseFloat(convertValue) * usdToLbpRate).toString());
         } else {
             setResultValue((parseFloat(convertValue) / lbpToUsdRate).toString());
         }
-        console.log(resultValue);
+    };
+
+    const handleClearClick = () => {
+        setConvertValue("");
+        setResultValue("");
     };
 
     return (
         //source: https://mui.com/material-ui/react-grid/
         <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
-                <Grid container spacing={1} alignItems="center"  justifyContent="space-around">
-                    <Grid item xs={3} margin-left="20px">
+                <Grid container spacing={1} justifyContent="space-around">
+                    <Grid item xs={4} margin-left="20px">
                         <Typography variant="subtitle1" align="center" className="currency-label">
                             {currencyLeft}
                             <img src={flagLeft} className="flag-converter" alt={altLeft} />
@@ -77,7 +83,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
                             className="amount-textfield"
                             fullWidth
                             placeholder="Enter amount to convert"
-                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            inputProps={{ inputMode: 'numer xic', pattern: '[0-9]*' }}
                             value={convertValue}
                             onChange={handleConvertValueChange}
                         />
@@ -87,7 +93,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
                             <SwapHorizIcon />
                         </Button>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Typography variant="subtitle1" align="center" className="currency-label">
                             {currencyRight}
                             <img src={flagRight} className="flag-converter" alt={altRight} />
@@ -107,10 +113,20 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
             </Grid>
             <Grid item xs={12} align="center">
                 <Button
+                    className="convert-button"
                     variant="contained"
                     size="large"
-                    onClick={handleConvertClick}>
+                    onClick={handleConvertClick}
+                    style={{ marginRight: '10px' }}>
                     Convert
+                </Button>
+                <Button
+                    className="convert-button"
+                    variant="contained"
+                    size="large"
+                    onClick={handleClearClick}
+                    style={{ marginLeft: '10px' }}>
+                Clear
                 </Button>
             </Grid>
         </Grid>

@@ -1,8 +1,26 @@
 .switch-conversion-button {
-    /*margin-left: 35px !important;*/
+    margin-left: 8px !important;
     margin-top: 50px !important;
     width: 64px;
     height: 36px;
+    color: rgb(0, 33, 65) !important;
+    border-color: rgb(0, 33, 65) !important;
+}
+
+.switch-conversion-button:hover {
+    background-color: rgb(35, 80, 128) !important;
+    border-color: rgb(35, 80, 128) !important;
+
+    color: white !important;
+
+}
+
+.convert-button {
+    background-color: rgb(0, 33, 65) !important;
+}
+
+.convert-button:hover {
+    background-color: rgb(35, 80, 128) !important;
 }
 
 .flag-converter {
@@ -21,6 +39,7 @@
 
 .amount-textfield {
     width: 300px !important;
+    margin-right: 550px !important;
 }
 
 .amount-textfield input {
