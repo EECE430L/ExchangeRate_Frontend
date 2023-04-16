@@ -1,13 +1,29 @@
-.exchange-card {
+.rates-card {
   width: 200px;
   height: 120px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 2px groove rgb(0, 33, 65);
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgb(0, 33, 65);
   background-color: white;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   justify-content: space-between;
   padding: 16px;
+  user-select: none;
+}
+
+.rates-card:hover {
+  transform: scale3d(1.05, 1.05, 1.05);
+}
+
+h2 {
+  font-size: 36px;
+  text-align: center;
+
+}
+
+p {
+  margin-top: 20px;
 }
 
 h2.remove-whitespace {
@@ -15,13 +31,13 @@ h2.remove-whitespace {
   padding: 0;
 }
 
-.exchange-card-header {
+.rates-card-header {
   display: flex;
   align-items: flex-start;
   white-space: nowrap;
 }
 
-.exchange-card-body {
+.rates-card-body {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
@@ -34,5 +50,12 @@ h2.remove-whitespace {
   height: auto;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 50px;
+}
+
+.flagLeft{
+  margin-left: 25px;
+
+}
+.flagRight{
+  margin-left: 100px;
 }

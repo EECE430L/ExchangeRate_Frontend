@@ -17,7 +17,10 @@ import {
   clearUserToken,
 } from "../utility/localStorage";
 import RatesCard from "../components/RatesCard";
+import ConvertCalculator from "../components/ConvertCalculator";
+
 import { transactionType } from "../enums/transactionType.js";
+import "../css/home.css";
 
 function Home() {
   const States = {
@@ -70,39 +73,26 @@ function Home() {
 
   return (
     <>
-      <Snackbar
-        elevation={6}
-        variant="filled"
-        open={authState === States.USER_AUTHENTICATED}
-        autoHideDuration={2000}
-        onClose={() => setAuthState(States.PENDING)}
-      >
-        <Alert severity="success">Success</Alert>
-      </Snackbar>
-
-      <div className="wrapper">
+      <div>
         <h2>
           Today's Exchange Rates
-          <RatesCard rate={1.11} transaction_type={transactionType.SellUSD} />
-          <RatesCard rate={1.11} transaction_type={transactionType.BuyUSD} />
         </h2>
-        <p>LBP to USD Exchange Rate</p>
-        <h3>
-          Buy USD:
-          <span id="buy-usd-rate">
-            &nbsp;
-            {!buyUsdRate ? "Not available yet" : buyUsdRate.toFixed(2)}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <span style={{ margin: '0 10px' }}>
+                <RatesCard className="rates-card" rate={"1500"} transaction_type={transactionType.UsdToLbp} />
+            </span>
+          <span style={{ margin: '0 10px' }}>
+            <RatesCard className="rates-card" rate={"0"} transaction_type={transactionType.LbpToUsd} />
           </span>
-        </h3>
-        <h3>
-          Sell USD:
-          <span id="sell-usd-rate">
-            &nbsp;
-            {!sellUsdRate ? "Not available yet" : sellUsdRate.toFixed(2)}
-          </span>
-        </h3>
+        </div>
+
 
         <hr />
+        <h2>
+          Currency Converter
+        </h2>
+        <ConvertCalculator />
+
 
         <h2>Convert values based on current rates</h2>
         <form name="transaction-entry">
@@ -170,70 +160,6 @@ function Home() {
             Clear
           </Button>
         </form>
-      </div>
-      <div className="wrapper">
-        <h2>Record a recent transaction</h2>
-        <form name="transaction-entry">
-          <div className="amount-input">
-            <label htmlFor="lbp-amount">LBP Amount</label>
-            <input
-              id="lbp-amount"
-              type="number"
-              value={lbpInput}
-              onChange={(e) => setLbpInput(e.target.value)}
-            />{" "}
-            <label htmlFor="usd-amount">USD Amount</label>
-            <input
-              id="usd-amount"
-              type="number"
-              value={usdInput}
-              onChange={(e) => setUsdInput(e.target.value)}
-            />
-          </div>
-          <Select
-            id="transaction-type"
-            value={transactionType}
-            // onChange={(e) => setTransactionType(e.target.value)}
-          >
-            <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
-            <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
-          </Select>
-          <Button
-            id="add-button"
-            className="button"
-            type="button"
-            onClick={addItem}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Add
-          </Button>
-        </form>
-        {userToken && (
-          <div className="wrapper">
-            <Typography variant="h5">Your Transactions</Typography>
-            <DataGrid
-              rows={userTransactions}
-              columns={[
-                { field: "usd_to_lbp", headerName: "USD to LBP", flex: 1 },
-                { field: "usd_amount", headerName: "USD Amount", flex: 1 },
-                { field: "lbp_amount", headerName: "LBP Amount", flex: 1 },
-                { field: "added_date", headerName: "Added Date", flex: 1 },
-              ]}
-              autoHeight
-              hideScrollbar={true}
-              hideFooter={true}
-            />
-          </div>
-        )}
       </div>
     </>
   );

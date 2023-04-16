@@ -1,5 +1,5 @@
 const transactionType = {
-  BuyUSD: "BuyUSD",
-  SellUSD: "SellUSD",
+  LbpToUsd: "LbpToUsd",
+  UsdToLbp: "UsdToLbp",
 };
 export { transactionType };

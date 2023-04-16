@@ -9,16 +9,14 @@ const RatesCard = ({ rate, transaction_type }) => {
   let [flagLeft, setFlagLeft] = useState(usaFlag);
   let [altLeft, setAltLeft] = useState("USAFlag");
   let [currencyLeft, setCurrencyLeft] = useState("USD");
-
+  let [exchangeRate, setExchangeRate] = useState(rate)
   let [flagRight, setFlagRight] = useState(lebanonFlag);
   let [altRight, setAltRight] = useState("LebFlag");
   let [currencyRight, setCurrencyRight] = useState("LBP");
 
-
-
     //source: https://stackoverflow.com/questions/58584258/too-many-re-renders-with-react-hooks
     useEffect(() => {
-        if (transaction_type === transactionType.BuyUSD) {
+        if (transaction_type === transactionType.LbpToUsd) {
             setFlagLeft(lebanonFlag);
             setAltLeft("LebFlag");
             setCurrencyLeft("LBP");
@@ -26,31 +24,42 @@ const RatesCard = ({ rate, transaction_type }) => {
             setFlagRight(usaFlag);
             setAltRight("USAFlag");
             setCurrencyRight("USD");
+        } else {
+            setFlagLeft(usaFlag);
+            setAltLeft("USAFlag");
+            setCurrencyLeft("USD");
+
+            setFlagRight(lebanonFlag);
+            setAltRight("LebFlag");
+            setCurrencyRight("LBP");
         }
     }, [transaction_type]);
 
+    useEffect(() => {
+        if (rate === "0") {
+            setExchangeRate("Not available")
+        }
+    }, [rate]);
 
   return (
-    <div className="exchange-card">
-      <div className="exchange-card-header">
+    <div className="rates-card">
+      <div className="rates-card-header">
         <h2 class="remove-whitespace">{currencyLeft} &#8594; {currencyRight}</h2>
       </div>
       <div>
-        <img
+        <img className="flag flagLeft"
           src={flagLeft}
           alt="USA"
-          className="flag"
           style={{ horizontalAlign: "left" }}
         />
-        <img
+        <img className="flag flagRight"
           src={flagRight}
           alt="Leb"
-          className="flag"
           style={{ horizontalAlign: "right" }}
         />
       </div>
-      <div className="exchange-card-body">
-        <p>{rate}</p>
+      <div className="rates-card-body">
+        <p>{exchangeRate}</p>
       </div>
     </div>
   );
