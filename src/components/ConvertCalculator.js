@@ -66,8 +66,8 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
         //source: https://mui.com/material-ui/react-grid/
         <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
-                <Grid container spacing={2} alignItems="center" justifyContent="center">
-                    <Grid item xs={3}>
+                <Grid container spacing={1} alignItems="center"  justifyContent="space-around">
+                    <Grid item xs={3} margin-left="20px">
                         <Typography variant="subtitle1" align="center" className="currency-label">
                             {currencyLeft}
                             <img src={flagLeft} className="flag-converter" alt={altLeft} />

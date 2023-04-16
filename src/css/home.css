@@ -1,3 +1,52 @@
 h2 {
     font-family: "Roboto Slab", serif;
 }
+
+.home-card-title {
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 33, 65);
+    border: 2px groove rgb(0, 33, 65);
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.home-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    border: 2px groove rgb(0, 33, 65);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.home-card-rates-title {
+    width: 700px;
+    height: 50px;
+}
+
+.home-card-converter-title {
+    width: 1000px;
+    height: 50px;
+}
+
+.home-card-rates {
+    width: 700px;
+    height: 200px;
+}
+
+.home-card-converter {
+    width: 900px;
+    height: 200px;
+}

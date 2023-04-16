@@ -1,6 +1,8 @@
 .switch-conversion-button {
-    margin-left: 35px !important;
+    /*margin-left: 35px !important;*/
     margin-top: 50px !important;
+    width: 64px;
+    height: 36px;
 }
 
 .flag-converter {
@@ -15,6 +17,10 @@
 .currency-label {
     font-size: 20px !important;
     font-family: "Roboto Slab", serif !important;
+}
+
+.amount-textfield {
+    width: 300px !important;
 }
 
 .amount-textfield input {
