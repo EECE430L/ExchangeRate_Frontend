@@ -79,10 +79,10 @@ function Home() {
         </h2>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
-                <RatesCard className="rates-card" rate={"1500"} transaction_type={transactionType.UsdToLbp} />
+                <RatesCard className="rates-card" rate={"1500"} exchange_direction={transactionType.UsdToLbp} />
             </span>
           <span style={{ margin: '0 10px' }}>
-            <RatesCard className="rates-card" rate={"0"} transaction_type={transactionType.LbpToUsd} />
+            <RatesCard className="rates-card" rate={"0"} exchange_direction={transactionType.LbpToUsd} />
           </span>
         </div>
 
@@ -91,75 +91,10 @@ function Home() {
         <h2>
           Currency Converter
         </h2>
-        <ConvertCalculator />
+        <ConvertCalculator usdToLbpRate={1500} lbpToUsdRate={1500} />
 
 
-        <h2>Convert values based on current rates</h2>
-        <form name="transaction-entry">
-          <div className="amount-input">
-            <label htmlFor="lbp-amount">LBP Amount</label>
-            <input
-              id="lbp-amount"
-              type="number"
-              value={calculatorLbpValue}
-              onChange={(e) => setCalculatorLbpValue(e.target.value)}
-            />
-            <label htmlFor="usd-amount">USD Amount</label>
-            <input
-              id="usd-amount"
-              type="number"
-              value={calculatorUsdValue}
-              onChange={(e) => setCalculatorUsdValue(e.target.value)}
-            />
-          </div>
-          <Select
-            id="conversion-type"
-            value={conversionType}
-            onChange={(e) => setConversionType(e.target.value)}
-          >
-            <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
-            <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
-          </Select>
-          <Button
-            id="add-button"
-            className="button"
-            type="button"
-            onClick={convertItem}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Convert
-          </Button>
-          <Button
-            id="clear-button"
-            className="button"
-            type="button"
-            onClick={() => {
-              setCalculatorUsdValue("");
-              setCalculatorLbpValue("");
-            }}
-            variant="contained"
-            sx={{
-              bgcolor: "blue",
-              color: "white",
-              "&:hover": {
-                bgcolor: "white",
-                color: "blue",
-                borderColor: "blue",
-              },
-            }}
-          >
-            Clear
-          </Button>
-        </form>
+
       </div>
     </>
   );

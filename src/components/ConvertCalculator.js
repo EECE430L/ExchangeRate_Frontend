@@ -1,81 +1,106 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Grid, Typography } from "@mui/material";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { transactionType } from "../enums/transactionType.js";
+import "../css/convertCalculator.css";
+import usaFlag from "../media/usaFlag.png";
+import lebanonFlag from "../media/lebanonFlag.png";
 
-function ConvertCalculator() {
-    const [usdValue, setUsdValue] = useState("");
-    const [lbpValue, setLbpValue] = useState("");
-    const [conversionType, setConversionType] = useState(
-        transactionType.UsdToLbp
-    );
+function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
+    let [flagLeft, setFlagLeft] = useState(usaFlag);
+    let [altLeft, setAltLeft] = useState("USAFlag");
+    let [currencyLeft, setCurrencyLeft] = useState("USD");
+    let [flagRight, setFlagRight] = useState(lebanonFlag);
+    let [altRight, setAltRight] = useState("LebFlag");
+    let [currencyRight, setCurrencyRight] = useState("LBP");
+    
+    let [convertValue, setConvertValue] = useState("");
+    let [resultValue, setResultValue] = useState("");
+    let [conversionType, setConversionType] = useState(transactionType.UsdToLbp);
 
-    const handleUsdChange = (event) => {
-        setUsdValue(event.target.value);
-    };
 
-    const handleLbpChange = (event) => {
-        setLbpValue(event.target.value);
-    };
-
-    const handleConversionClick = () => {
-        if (conversionType === transactionType.UsdToLbp) {
-            setLbpValue(parseFloat(usdValue) * 1500);
+    //source: https://stackoverflow.com/questions/58584258/too-many-re-renders-with-react-hooks
+    useEffect(() => {
+        if (conversionType === transactionType.LbpToUsd) {
+            setFlagLeft(lebanonFlag);
+            setAltLeft("LebFlag");
+            setCurrencyLeft("LBP");
+            setFlagRight(usaFlag);
+            setAltRight("USAFlag");
+            setCurrencyRight("USD");
         } else {
-            setUsdValue(parseFloat(lbpValue) / 1500);
+            setFlagLeft(usaFlag);
+            setAltLeft("USAFlag");
+            setCurrencyLeft("USD");
+            setFlagRight(lebanonFlag);
+            setAltRight("LebFlag");
+            setCurrencyRight("LBP");
         }
-    };
+    }, [conversionType]);
 
-    const handleSwapClick = () => {
+    const handleSwitchConversionClick = () => {
         if (conversionType === transactionType.UsdToLbp) {
             setConversionType(transactionType.LbpToUsd);
         } else {
             setConversionType(transactionType.UsdToLbp);
         }
+        setConvertValue("");
+        setResultValue("");
     };
 
-    const fromLabel =
-        conversionType === transactionType.UsdToLbp ? "USD" : "LBP";
-    const toLabel =
-        conversionType === transactionType.UsdToLbp ? "LBP" : "USD";
+    const handleConvertValueChange = (event) => {
+        setConvertValue(event.target.value);
+    };
+
+    const handleConvertClick = () => {
+
+        if (conversionType === transactionType.UsdToLbp) {
+            setResultValue((parseFloat(convertValue) * usdToLbpRate).toString());
+        } else {
+            setResultValue((parseFloat(convertValue) / lbpToUsdRate).toString());
+        }
+        console.log(resultValue);
+    };
 
     return (
+        //source: https://mui.com/material-ui/react-grid/
         <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
+                        <Typography variant="subtitle1" align="center" className="currency-label">
+                            {currencyLeft}
+                            <img src={flagLeft} className="flag-converter" alt={altLeft} />
+                        </Typography>
                         <TextField
-                            label={`Amount (${fromLabel})`}
                             variant="outlined"
+                            className="amount-textfield"
                             fullWidth
-                            value={
-                                conversionType === transactionType.UsdToLbp ? usdValue : lbpValue
-                            }
-                            onChange={
-                                conversionType === transactionType.UsdToLbp
-                                    ? handleUsdChange
-                                    : handleLbpChange
-                            }
+                            placeholder="Enter amount to convert"
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            value={convertValue}
+                            onChange={handleConvertValueChange}
                         />
                     </Grid>
-                    <Grid item xs={1} style={{marginTop: "30px"}}>
-                        <Button variant="outlined" onClick={handleSwapClick}>
+                    <Grid item xs={1} style={{ padding: 0 }}>
+                        <Button variant="outlined" onClick={handleSwitchConversionClick} className={"switch-conversion-button"}>
                             <SwapHorizIcon />
                         </Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
+                        <Typography variant="subtitle1" align="center" className="currency-label">
+                            {currencyRight}
+                            <img src={flagRight} className="flag-converter" alt={altRight} />
+                        </Typography>
                         <TextField
-                            label={`Amount (${toLabel})`}
                             variant="outlined"
+                            className="amount-textfield"
                             fullWidth
-                            value={
-                                conversionType === transactionType.UsdToLbp ? lbpValue : usdValue
-                            }
-                            onChange={
-                                conversionType === transactionType.UsdToLbp
-                                    ? handleLbpChange
-                                    : handleUsdChange
-                            }
+                            placeholder="Result"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            value={resultValue}
                         />
                     </Grid>
                 </Grid>
@@ -84,8 +109,7 @@ function ConvertCalculator() {
                 <Button
                     variant="contained"
                     size="large"
-                    onClick={handleConversionClick}
-                >
+                    onClick={handleConvertClick}>
                     Convert
                 </Button>
             </Grid>

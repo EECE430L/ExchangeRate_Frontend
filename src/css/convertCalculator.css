@@ -1,0 +1,23 @@
+.switch-conversion-button {
+    margin-left: 35px !important;
+    margin-top: 50px !important;
+}
+
+.flag-converter {
+    width: 7%;
+    height: auto;
+    margin-left: 5px;
+    margin-bottom: 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.currency-label {
+    font-size: 20px !important;
+    font-family: "Roboto Slab", serif !important;
+}
+
+.amount-textfield input {
+    background-color: white;
+    font-family: "Roboto Slab", serif;
+}
