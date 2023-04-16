@@ -16,7 +16,7 @@ import {
   saveUserToken,
   clearUserToken,
 } from "../utility/localStorage";
-import RatesCard from "../components/RatesCard";
+import RateCard from "../components/RateCard";
 import ConvertCalculator from "../components/ConvertCalculator";
 
 import { transactionType } from "../enums/transactionType.js";
@@ -80,10 +80,10 @@ function Home() {
         <div className="home-card home-card-rates">
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
-                <RatesCard className="rates-card" rate={"1500"} exchange_direction={transactionType.UsdToLbp} />
+                <RateCard className="rates-card" rate={"1500"} exchange_direction={transactionType.UsdToLbp} />
             </span>
           <span style={{ margin: '0 10px' }}>
-            <RatesCard className="rates-card" rate={"0"} exchange_direction={transactionType.LbpToUsd} />
+            <RateCard className="rates-card" rate={"0"} exchange_direction={transactionType.LbpToUsd} />
           </span>
         </div>
       </div>
