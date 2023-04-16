@@ -17,6 +17,7 @@ import {
   clearUserToken,
 } from "../utility/localStorage";
 import RatesCard from "../components/RatesCard";
+import { transactionType } from "../enums/transactionType.js";
 
 function Home() {
   const States = {
@@ -30,7 +31,7 @@ function Home() {
   let [sellUsdRate, setSellUsdRate] = useState(null);
   let [lbpInput, setLbpInput] = useState("");
   let [usdInput, setUsdInput] = useState("");
-  let [transactionType, setTransactionType] = useState("usd-to-lbp");
+  // let [transactionType, setTransactionType] = useState("usd-to-lbp");
   let [calculatorUsdValue, setCalculatorUsdValue] = useState("");
   let [calculatorLbpValue, setCalculatorLbpValue] = useState("");
   let [conversionType, setConversionType] = useState("usd-to-lbp");
@@ -82,7 +83,8 @@ function Home() {
       <div className="wrapper">
         <h2>
           Today's Exchange Rates
-          <RatesCard rate={1.11}> </RatesCard>
+          <RatesCard rate={1.11} transaction_type={transactionType.SellUSD} />
+          <RatesCard rate={1.11} transaction_type={transactionType.BuyUSD} />
         </h2>
         <p>LBP to USD Exchange Rate</p>
         <h3>
@@ -191,7 +193,7 @@ function Home() {
           <Select
             id="transaction-type"
             value={transactionType}
-            onChange={(e) => setTransactionType(e.target.value)}
+            // onChange={(e) => setTransactionType(e.target.value)}
           >
             <MenuItem value="usd-to-lbp">USD to LBP</MenuItem>
             <MenuItem value="lbp-to-usd">LBP to USD</MenuItem>
