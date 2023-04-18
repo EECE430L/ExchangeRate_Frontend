@@ -44,15 +44,15 @@ const RateCard = ({ rate, exchange_direction }) => {
   return (
     <div className="rates-card">
       <div className="rates-card-header">
-        <h2 className="remove-whitespace">{currencyLeft} &#8594; {currencyRight}</h2>
+        <h2 className="remove-whitespace currency">{currencyLeft} &#8594; {currencyRight}</h2>
       </div>
       <div>
-        <img className="flag flagLeft"
+        <img className="flag flag-left"
           src={flagLeft}
           alt="USA"
           style={{ horizontalAlign: "left" }}
         />
-        <img className="flag flagRight"
+        <img className="flag flag-right"
           src={flagRight}
           alt="Leb"
           style={{ horizontalAlign: "right" }}

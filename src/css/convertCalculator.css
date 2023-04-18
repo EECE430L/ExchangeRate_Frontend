@@ -38,9 +38,8 @@
 }
 
 .amount-textfield {
-    width: 300px !important;
-    margin-right: 550px !important;
-}
+    width: 20vw !important;
+ }
 
 .amount-textfield input {
     background-color: white;

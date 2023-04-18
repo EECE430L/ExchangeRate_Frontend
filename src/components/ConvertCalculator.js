@@ -72,7 +72,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
         //source: https://mui.com/material-ui/react-grid/
         <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
-                <Grid container spacing={1} justifyContent="space-around">
+                <Grid container spacing={0} justifyContent="space-around" sx={{ '& > *': { margin: '1vw' } }}>
                     <Grid item xs={4} margin-left="20px">
                         <Typography variant="subtitle1" align="center" className="currency-label">
                             {currencyLeft}
@@ -83,7 +83,6 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
                             className="amount-textfield"
                             fullWidth
                             placeholder="Enter amount to convert"
-                            inputProps={{ inputMode: 'numer xic', pattern: '[0-9]*' }}
                             value={convertValue}
                             onChange={handleConvertValueChange}
                         />

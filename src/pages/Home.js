@@ -18,11 +18,11 @@ import {
 } from "../utility/localStorage";
 import RateCard from "../components/RateCard";
 import ConvertCalculator from "../components/ConvertCalculator";
-
 import { transactionType } from "../enums/transactionType.js";
 import "../css/home.css";
 
 function Home() {
+  console.log(window.innerWidth);
   const States = {
     PENDING: "PENDING",
     USER_CREATION: "USER_CREATION",
@@ -74,9 +74,11 @@ function Home() {
   return (
     <>
       <div>
-        <h2 className="home-card-rates-title home-card-title">
-          Today's Exchange Rates
-        </h2>
+        <div>
+          <h2 className="home-card-rates-title home-card-title">
+            Today's Exchange Rates
+          </h2>
+        </div>
         <div className="home-card home-card-rates">
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
