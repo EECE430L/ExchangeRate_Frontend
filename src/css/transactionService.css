@@ -1,0 +1,20 @@
+.flex-parent-element {
+    display: flex;
+    width: 100%;
+}
+
+.flex-child-element {
+    flex: 1;
+    margin: 3vh;
+    margin-bottom: 0;
+    height: 50vh;
+}
+
+.flex-child-body{
+    border: 0.3vh groove rgb(0, 33, 65);
+    background-color: white;
+    border-radius: 1vh;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 50vh;
+}

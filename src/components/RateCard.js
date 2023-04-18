@@ -5,7 +5,7 @@ import usaFlag from "../media/usaFlag.png";
 import lebanonFlag from "../media/lebanonFlag.png";
 import { transactionType } from "../enums/transactionType.js";
 
-const RateCard = ({ rate, exchange_direction }) => {
+function RateCard ({ rate, exchange_direction }) {
   let [flagLeft, setFlagLeft] = useState(usaFlag);
   let [altLeft, setAltLeft] = useState("USAFlag");
   let [currencyLeft, setCurrencyLeft] = useState("USD");
@@ -63,6 +63,6 @@ const RateCard = ({ rate, exchange_direction }) => {
       </div>
     </div>
   );
-};
+}
 
 export default RateCard;

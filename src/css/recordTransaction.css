@@ -1,0 +1,12 @@
+.currency-row {
+    margin: 1vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40vw;
+}
+
+.currency-label {
+    display: inline-block;
+    width: 100px !important;
+}

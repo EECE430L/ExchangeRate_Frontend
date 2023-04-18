@@ -72,7 +72,6 @@ function Home() {
   }
 
   return (
-    <>
       <div>
         <div>
           <h2 className="home-card-rates-title home-card-title">
@@ -80,15 +79,15 @@ function Home() {
           </h2>
         </div>
         <div className="home-card home-card-rates">
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
                 <RateCard className="rate-card" rate={"1500"} exchange_direction={transactionType.UsdToLbp} />
             </span>
-          <span style={{ margin: '0 10px' }}>
+            <span style={{ margin: '0 10px' }}>
             <RateCard className="rate-card" rate={"0"} exchange_direction={transactionType.LbpToUsd} />
           </span>
+          </div>
         </div>
-      </div>
 
         <h2 className="home-card-title home-card-converter-title">
           Currency Converter
@@ -97,7 +96,6 @@ function Home() {
           <ConvertCalculator usdToLbpRate={1500} lbpToUsdRate={1500} />
         </div>
       </div>
-    </>
   );
 }
 

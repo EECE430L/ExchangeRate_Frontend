@@ -10,13 +10,14 @@ function Statistics(props) {
     const [width, setWidth] = useState(620);
     const [height, setHeight] = useState(500);
 
-    //source: ChatGPT helped me construct a function that resizes the graph depending on the wrapper-content div size
-    //since LineChart expects fixed values for the dimensions, so I could not use simple CSS
+    // I wanted to set the width and height property of the graph based on the size of the wrapper-content div
+    // since LineChart expects fixed values for the dimensions, so I could not use simple CSS,
+    // so I used ChatGPT to learn how to get the size of the div and add an event listener to resizes
     useEffect(() => {
         function handleResize() {
             const wrapperContent = document.querySelector(".wrapper-content");
             setWidth(wrapperContent.clientWidth * 0.9);
-            setHeight(wrapperContent.clientHeight * 0.8);
+            setHeight(width/1.4);
         }
         window.addEventListener("resize", handleResize);
         handleResize();

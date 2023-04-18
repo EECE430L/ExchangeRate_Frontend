@@ -47,8 +47,8 @@ function Navbar() {
         {!showBars ? <div className="vertical-line"></div> : null}
 
         <li className="nav-item">
-          <a href="/exchange-service" className="nav-text">
-            Exchange Service
+          <a href="/transaction-service" className="nav-text">
+            Transaction Service
           </a>
         </li>
       </ul>
