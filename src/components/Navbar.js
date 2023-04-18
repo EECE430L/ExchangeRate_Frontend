@@ -4,7 +4,8 @@ import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
 
 function Navbar() {
-  //navbar style, css and responsiveness animation inspired by an old project I did
+  //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
+  let [showBars, setShowBars] = useState(false);
   const [active, setActive] = useState("nav-menu");
   const [icon, setIcon] = useState("nav-toggler");
   const isLoggedIn =
@@ -14,12 +15,17 @@ function Navbar() {
   const navToggle = () => {
     if (active === "nav-menu") {
       setActive("nav-menu nav-active");
-    } else setActive("nav-menu");
+      setShowBars(true);
+    } else {
+      setActive("nav-menu");
+      setShowBars(false);
+    }
 
     if (icon === "nav-toggler") {
       setIcon("nav-toggler toggle");
     } else setIcon("nav-toggler");
   };
+
   return (
     <nav className="nav">
       <a href="/" className="nav-brand nav-text">
@@ -32,13 +38,13 @@ function Navbar() {
             Home
           </a>
         </li>
-        <div className="vertical-line"></div>
+        {!showBars ? <div className="vertical-line"></div> : null}
         <li className="nav-item">
           <a href="/statistics" className="nav-text nav-item">
             Statistics
           </a>
         </li>
-        <div className="vertical-line"></div>
+        {!showBars ? <div className="vertical-line"></div> : null}
 
         <li className="nav-item">
           <a href="/exchange-service" className="nav-text">
