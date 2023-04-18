@@ -3,6 +3,8 @@ import "../css/statistics.css";
 import { useState, useEffect } from "react";
 import RateGraph from "../components/RateGraph";
 import PercentChange from "../components/PercentChange"
+import RateCard from "../components/RateCard"
+import { transactionType } from "../enums/transactionType.js";
 
 function Statistics(props) {
     const [width, setWidth] = useState(620);
@@ -16,7 +18,6 @@ function Statistics(props) {
             setWidth(wrapperContent.clientWidth * 0.9);
             setHeight(wrapperContent.clientHeight * 0.8);
         }
-
         window.addEventListener("resize", handleResize);
         handleResize();
 
@@ -69,14 +70,33 @@ function Statistics(props) {
 
             <div className="wrapper-content">
 
+                <h2 className="section-title">
+                    24-Hour Exchange Rates Percent Change
+                </h2>
                 <PercentChange
-                    todayBuyRate={todayBuyRate}
-                    yesterdayBuyRate={yesterdayBuyRate}
-                    todaySellRate={todaySellRate}
-                    yesterdaySellRate={yesterdaySellRate}
+                    buyPercentChange={1.22}
+                    sellPercentChange={-1.33}
                 />
+                <hr />
 
-                <h2 className="graph-title">
+                <h2 className="section-title">
+                    Number of Transactions in the Last 24 Hours
+                </h2>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <span style={{ margin: '0 10px' }}>
+                        <RateCard className="rate-card"
+                                  rate={"322"}
+                                  exchange_direction={transactionType.UsdToLbp} />
+                    </span>
+                    <span style={{ margin: '0 10px' }}>
+                        <RateCard className="rate-card"
+                                  rate={"176"}
+                                  exchange_direction={transactionType.LbpToUsd} />
+                    </span>
+                </div>
+                <hr />
+
+                <h2 className="section-title">
                     Exchange Rates vs. Time Over Last Month
                 </h2>
                 <RateGraph className="rates-graph"

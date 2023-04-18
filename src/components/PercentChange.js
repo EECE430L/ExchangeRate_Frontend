@@ -1,11 +1,7 @@
 import React from 'react';
 import "../css/percentChange.css";
 
-function PercentChange(props) {
-    const { todayBuyRate, yesterdayBuyRate, todaySellRate, yesterdaySellRate } = props;
-    const buyPercentChange = ((todayBuyRate - yesterdayBuyRate) / yesterdayBuyRate) * 100;
-    const sellPercentChange = ((todaySellRate - yesterdaySellRate) / yesterdaySellRate) * 100;
-
+function PercentChange({ buyPercentChange, sellPercentChange }) {
     const formatPercentChange = (percentChange) => {
         const formattedPercentChange = percentChange.toFixed(2);
 
@@ -17,7 +13,7 @@ function PercentChange(props) {
         return (
             <span className={`percent-change ${percentChangeClassName}`}>
         <span>{signSymbol}</span>
-                {formattedPercentChange}%
+                {formattedPercentChange}%&nbsp;
         <span>{arrowSymbol}</span>
       </span>
         );
@@ -26,12 +22,14 @@ function PercentChange(props) {
     return (
         <div className="percent-change-container">
             <div>
-                <span>Buy Percent Change:</span>
-                {formatPercentChange(buyPercentChange)}
+                <h3>
+                    Buy Percent Change: {formatPercentChange(buyPercentChange)}
+                </h3>
             </div>
             <div>
-                <span>Sell Percent Change:</span>
-                {formatPercentChange(sellPercentChange)}
+                <h3>
+                    Sell Percent Change: {formatPercentChange(sellPercentChange)}
+                </h3>
             </div>
         </div>
     );

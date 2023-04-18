@@ -1,4 +1,4 @@
-.rates-card {
+.rate-card {
   width: 13vw;
   height: 8vw;
   border: 2px groove rgb(0, 33, 65);
@@ -12,7 +12,7 @@
   user-select: none;
 }
 
-.rates-card:hover {
+.rate-card:hover {
   transform: scale3d(1.05, 1.05, 1.05);
 }
 

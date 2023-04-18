@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "../css/ratesCard.css";
+import "../css/rateCard.css";
 import usaFlag from "../media/usaFlag.png";
 import lebanonFlag from "../media/lebanonFlag.png";
 import { transactionType } from "../enums/transactionType.js";
@@ -42,7 +42,7 @@ const RateCard = ({ rate, exchange_direction }) => {
     }, [rate]);
 
   return (
-    <div className="rates-card">
+    <div className="rate-card">
       <div className="rates-card-header">
         <h2 className="remove-whitespace currency">{currencyLeft} &#8594; {currencyRight}</h2>
       </div>

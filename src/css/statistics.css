@@ -29,9 +29,12 @@
     border-bottom-right-radius: 0;
 }
 
-.graph-title {
+.section-title {
     margin-top: 0vh;
     margin-bottom: 1vh;
     font-size: 1.5rem;
 }
 
+hr {
+    width: 100%;
+}
