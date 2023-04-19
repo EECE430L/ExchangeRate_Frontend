@@ -1,0 +1,23 @@
+.form-row {
+    display: flex;
+    justify-content: center;
+}
+
+.request-label {
+    margin-right: 1.5vw !important;
+    margin-top: 1.5vh !important;
+    white-space: nowrap;
+
+}
+
+.request-textfield{
+    width: 16vw;
+    margin-right: 1.5vw !important;
+    margin-bottom: 2vh !important;
+}
+
+.request-other-currency {
+    color: #666666;
+    margin-top: 2vh !important;
+}
+

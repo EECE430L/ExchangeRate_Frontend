@@ -20,7 +20,7 @@ function RecordTransaction({onSubmit}) {
     let [lbpAmount, setLbpAmount] = useState('');
     let [exchangeType, setExchangeType] = useState('');
     let [missingInput, setMissingInput] = useState(false);
-    let [nonNumericInput, setNonNumericInput] = useState(false)
+    let [nonNumericInput, setNonNumericInput] = useState(false);
 
     function handleUsdAmountChange(event) { setUsdAmount(event.target.value); }
     function handleLbpAmountChange(event) { setLbpAmount(event.target.value); }

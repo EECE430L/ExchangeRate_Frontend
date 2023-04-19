@@ -1,13 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import "../css/transactionService.css"
 import RecordTransaction from "../components/RecordTransaction.js"
 import UserTransactionsTable from "../components/UserTransactionsTable.js"
+import OfferTransaction from "../components/OfferTransaction.js"
+import { transactionType } from "../enums/transactionType.js"
 
 
 function TransactionService() {
-    let [usdAmountRecordTransaction, setUsdAmountRecordTransaction] = useState(null);
-    let [lbpAmountRecordTransaction, setLbpAmountRecordTransaction] = useState(null);
-    let [exchangeTypeRecordTransaction, setExchangeTypeRecordTransaction] = useState(null);
+    let [usdAmountRecordTransaction, setUsdAmountRecordTransaction] = useState("");
+    let [lbpAmountRecordTransaction, setLbpAmountRecordTransaction] = useState("");
+    let [exchangeTypeRecordTransaction, setExchangeTypeRecordTransaction] = useState("");
+
+    let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
+    let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
+    let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
+
 
     const transactions = [
         {
@@ -152,6 +159,19 @@ function TransactionService() {
         setExchangeTypeRecordTransaction(exchangeType);
     }
 
+    function handleOfferTransactionSubmit(offerAmount, requestAmount, offerCurrency) {
+        if (offerCurrency === "USD"){
+            setUsdAmountOfferTransaction(offerAmount);
+            setLbpAmountOfferTransaction(requestAmount);
+            setExchangeTypeOfferTransaction(transactionType.UsdToLbp);
+        }
+        else {
+            setUsdAmountOfferTransaction(requestAmount);
+            setLbpAmountOfferTransaction(offerAmount);
+            setExchangeTypeOfferTransaction(transactionType.LbpToUsd);
+        }
+    }
+
     return (
         <>
             {/*source: https://dev.to/dawnind/3-ways-to-display-two-divs-side-by-side-3d8b#:~:text=The%20most%20common%20way%20to,using%20inline%2Dblock%20css%20property.&text=The%20inline%2Dblock%20property%20on,like%20an%20inline%20element%20does*/}
@@ -167,15 +187,18 @@ function TransactionService() {
                             exchanged in your transaction. Then, select the type of the exchange.
                         </p>
                         <RecordTransaction onSubmit={handleRecordTransactionSubmit}/>
-
                     </div>
                 </div>
                 <div className="flex-child-element">
                     <div className="header">
-                        <h1>Request Transaction from User</h1>
+                        <h1>Offer Transaction to User</h1>
                     </div>
                     <div className="flex-child-body">
-                        test
+                        <p className="transaction-service-instructions">
+                            To offer a transaction to a user, please input their username, the amount you are offering
+                            and in which currency, and the amount you are requesting.
+                        </p>
+                        <OfferTransaction onSubmit={handleOfferTransactionSubmit} />
                     </div>
                 </div>
             </div>
