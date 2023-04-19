@@ -21,3 +21,8 @@
     margin-top: 2vh !important;
 }
 
+.username-row {
+    display: flex;
+    justify-content: center;
+    gap: 5vw;
+}

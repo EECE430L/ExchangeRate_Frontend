@@ -11,6 +11,7 @@ function TransactionService() {
     let [lbpAmountRecordTransaction, setLbpAmountRecordTransaction] = useState("");
     let [exchangeTypeRecordTransaction, setExchangeTypeRecordTransaction] = useState("");
 
+    let [recipientUsernameOfferTransaction, setRecipientUsernameOfferTransaction] = useState("");
     let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
     let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
     let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
@@ -159,7 +160,8 @@ function TransactionService() {
         setExchangeTypeRecordTransaction(exchangeType);
     }
 
-    function handleOfferTransactionSubmit(offerAmount, requestAmount, offerCurrency) {
+    function handleOfferTransactionSubmit(recipientUsername, offerAmount, requestAmount, offerCurrency) {
+        setRecipientUsernameOfferTransaction(recipientUsername);
         if (offerCurrency === "USD"){
             setUsdAmountOfferTransaction(offerAmount);
             setLbpAmountOfferTransaction(requestAmount);

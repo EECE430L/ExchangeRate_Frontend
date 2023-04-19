@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../css/requestTransaction.css"
+import "../css/offerTransaction.css"
 import {transactionType} from "../enums/transactionType";
 import {
     Button,
@@ -14,6 +14,7 @@ import {
 
 
 function OfferTransaction({ onSubmit }) {
+    let [recipientUsername, setRecipientUsername] = useState('');
     let [offerAmount, setOfferAmount] = useState('');
     let [requestAmount, setRequestAmount] = useState('');
     let [offerCurrency, setOfferCurrency] = useState('');
@@ -22,6 +23,7 @@ function OfferTransaction({ onSubmit }) {
     let [missingInput, setMissingInput] = useState(false);
     let [nonNumericInput, setNonNumericInput] = useState(false);
 
+    function handleRecipientUsernameChange(event) { setRecipientUsername(event.target.value); }
     function handleOfferAmountChange(event) { setOfferAmount(event.target.value); }
     function handleRequestAmountChange(event) { setRequestAmount(event.target.value); }
     function handleOfferCurrencyChange(event) {
@@ -36,7 +38,7 @@ function OfferTransaction({ onSubmit }) {
     }
 
     function handleOfferButtonClick() {
-        if (!offerAmount || !requestAmount || !offerCurrency) {
+        if (!recipientUsername || !offerAmount || !requestAmount || !offerCurrency) {
             setMissingInput(true)
             return;
         }
@@ -47,10 +49,11 @@ function OfferTransaction({ onSubmit }) {
             setNonNumericInput(true);
             return;
         }
-        onSubmit(offerAmount, requestAmount, offerCurrency);
+        onSubmit(recipientUsername, offerAmount, requestAmount, offerCurrency);
     }
 
     function handleClearButtonClick() {
+        setRecipientUsername("");
         setOfferAmount("");
         setRequestAmount("");
         setOfferCurrency("");
@@ -81,6 +84,21 @@ function OfferTransaction({ onSubmit }) {
             >
                 <Alert severity="error">Please only include numbers in the form.</Alert>
             </Snackbar>
+
+            <div className="username-row">
+                <div>
+                    <Typography variant="subtitle4"  className="currency-label request-label">
+                        Recipient username:
+                    </Typography>
+                </div>
+                <TextField
+                    className="request-textfield"
+                    variant="outlined"
+                    label="Enter username of recipient"
+                    value={recipientUsername}
+                    onChange={handleRecipientUsernameChange}
+                />
+            </div>
 
             <div className="form-row">
                 <div>
@@ -151,8 +169,6 @@ function OfferTransaction({ onSubmit }) {
                     Clear
                 </Button>
             </div>
-
-
         </>
     );
 }
