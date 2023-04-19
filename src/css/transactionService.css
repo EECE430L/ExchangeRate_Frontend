@@ -7,7 +7,7 @@
     flex: 1;
     margin: 3vh;
     margin-bottom: 0;
-    height: 50vh;
+    height: 62vh;
 }
 
 .flex-child-body{
@@ -19,8 +19,13 @@
     height: 53vh;
 }
 
-.record-transaction-instructions {
+.transaction-service-instructions {
     font-family: "Roboto Slab", serif;
     color: #545353;
     margin: 2vw;
+}
+
+.user-transactions-table-container {
+    width: 70vw;
+    height: 72vh;
 }

@@ -15,7 +15,7 @@ import {
     Snackbar } from "@mui/material";
 
 
-function RecordTransaction({handleRecordTransactionSubmit}) {
+function RecordTransaction({onSubmit}) {
     let [usdAmount, setUsdAmount] = useState('');
     let [lbpAmount, setLbpAmount] = useState('');
     let [exchangeType, setExchangeType] = useState('');
@@ -33,12 +33,12 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
         }
         //define a numeric regular expression with optional decimal to compare against the inputs
         //source: https://stackoverflow.com/questions/10023845/regex-in-javascript-for-validating-decimal-numbers
-        const numericRegex = /^\d+\.\d{0,2}$/;
+        const numericRegex = /^\d+(\.\d+)?$/;
         if (!numericRegex.test(usdAmount) || !numericRegex.test(lbpAmount)) {
             setNonNumericInput(true);
             return;
         }
-        handleRecordTransactionSubmit(usdAmount, lbpAmount, exchangeType);
+        onSubmit(usdAmount, lbpAmount, exchangeType);
     }
 
     function handleClearButtonClick() {
@@ -111,6 +111,8 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
                 />
             </div>
         </div>
+
+        {/* source for drop-down menu: https://mui.com/material-ui/react-select/ */}
         <div className="menu-row">
             <FormControl sx={{ m: 1, minWidth: 160 }}>
                 <InputLabel id="demo-simple-select-autowidth-label">
