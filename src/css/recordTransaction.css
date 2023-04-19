@@ -1,12 +1,39 @@
 .currency-row {
     margin: 1vh;
+    margin-top: 2vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 40vw;
 }
 
+.menu-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .currency-label {
     display: inline-block;
-    width: 100px !important;
+    width: 8vw;
+}
+
+.amount-textfield {
+    width: 20vw !important;
+}
+
+.record-transaction-button {
+    background-color: rgb(0, 33, 65) !important;
+    margin: 1vw !important;
+}
+
+.record-transaction-button:hover {
+    background-color: rgb(35, 80, 128) !important;
 }

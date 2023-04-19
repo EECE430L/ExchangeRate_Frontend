@@ -16,5 +16,11 @@
     border-radius: 1vh;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    height: 50vh;
+    height: 53vh;
+}
+
+.record-transaction-instructions {
+    font-family: "Roboto Slab", serif;
+    color: #545353;
+    margin: 2vw;
 }
