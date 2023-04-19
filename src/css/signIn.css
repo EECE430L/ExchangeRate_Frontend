@@ -1,0 +1,77 @@
+.sign-in-wrapper {
+    height: 60vh;
+    width: 40vw;
+}
+
+.sign-in-wrapper-conte.sign-in-wrapper {
+    height: 50vh;
+    width: 40vw;
+}
+
+.sign-in-wrapper-content {
+    width: 35vw;
+    height: 80vh;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabs button {
+    color: rgb(0, 33, 65);
+    font-size: 2vw;
+    padding: 1vw;
+    margin: 0 0.8vw;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.tabs button.active {
+    border-bottom: 2px solid rgb(0, 33, 65);
+}
+
+.sign-in-instructions{
+    font-family: "Roboto Slab", serif;
+    color: #545353;
+    margin-bottom: 3vh;
+}
+
+.sign-in-textfield {
+
+}nt {
+    width: 35vw;
+    height: 80vh;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabs button {
+    color: rgb(0, 33, 65);
+    font-size: 2vw;
+    padding: 1vw;
+    margin: 0 0.8vw;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.tabs button.active {
+    border-bottom: 2px solid rgb(0, 33, 65);
+}
+
+.sign-in-instructions{
+    font-family: "Roboto Slab", serif;
+    color: #545353;
+    margin-bottom: 3vh;
+}
+
+.sign-in-textfield {
+    margin-bottom: 2vh !important;
+}

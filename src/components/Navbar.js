@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import "../css/navbar.css";
 import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
   let [showBars, setShowBars] = useState(false);
   const [active, setActive] = useState("nav-menu");
   const [icon, setIcon] = useState("nav-toggler");
-  const isLoggedIn =
-    sessionStorage.getItem("access") !== null ||
-    sessionStorage.getItem("refresh") !== null;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  //source: https://stackoverflow.com/questions/50644976/react-button-onclick-redirect-page
+  let navigate = useNavigate();
+  function redirectSignIn() {
+    navigate("/sign-in");
+  }
 
   const navToggle = () => {
     if (active === "nav-menu") {
@@ -57,9 +62,7 @@ function Navbar() {
       ) : (
         <Button
           className="sign-in-button"
-          onClick={() =>
-            window.location.replace(sessionStorage.getItem("MicrosoftLink"))
-          }
+          onClick={redirectSignIn}
         >
           Sign In
         </Button>

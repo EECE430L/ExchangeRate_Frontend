@@ -28,7 +28,7 @@ function RecordTransaction({onSubmit}) {
 
     function handleSubmitButtonClick() {
         if (!usdAmount || !lbpAmount || !exchangeType) {
-            setMissingInput(true)
+            setMissingInput(true);
             return;
         }
         //define a numeric regular expression with optional decimal to compare against the inputs
