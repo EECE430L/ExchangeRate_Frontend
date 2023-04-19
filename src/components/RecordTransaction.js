@@ -19,7 +19,8 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
     let [usdAmount, setUsdAmount] = useState('');
     let [lbpAmount, setLbpAmount] = useState('');
     let [exchangeType, setExchangeType] = useState('');
-    const [missingInput, setMissingInput] = useState(false);
+    let [missingInput, setMissingInput] = useState(false);
+    let [nonNumericInput, setNonNumericInput] = useState(false)
 
     function handleUsdAmountChange(event) { setUsdAmount(event.target.value); }
     function handleLbpAmountChange(event) { setLbpAmount(event.target.value); }
@@ -28,6 +29,13 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
     function handleSubmitButtonClick() {
         if (!usdAmount || !lbpAmount || !exchangeType) {
             setMissingInput(true)
+            return;
+        }
+        //define a numeric regular expression with optional decimal to compare against the inputs
+        //source: https://stackoverflow.com/questions/10023845/regex-in-javascript-for-validating-decimal-numbers
+        const numericRegex = /^\d+\.\d{0,2}$/;
+        if (!numericRegex.test(usdAmount) || !numericRegex.test(lbpAmount)) {
+            setNonNumericInput(true);
             return;
         }
         handleRecordTransactionSubmit(usdAmount, lbpAmount, exchangeType);
@@ -41,11 +49,13 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
 
     function closeAlert() {
         setMissingInput(false);
+        setNonNumericInput(false);
     };
 
 
     return (
     <>
+        {/* Alerts inspired by the frontend lab from class */}
         <Snackbar
             open={missingInput}
             autoHideDuration={3000}
@@ -53,6 +63,15 @@ function RecordTransaction({handleRecordTransactionSubmit}) {
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
             <Alert severity="error">Please fill in all inputs before submitting the form.</Alert>
+        </Snackbar>
+
+        <Snackbar
+            open={nonNumericInput}
+            autoHideDuration={3000}
+            onClose={closeAlert}
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+            <Alert severity="error">Please only include numbers in the form.</Alert>
         </Snackbar>
 
         <div className="currency-row">
