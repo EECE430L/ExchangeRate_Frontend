@@ -13,6 +13,8 @@ import {
     MenuItem,
     Alert,
     Snackbar } from "@mui/material";
+import SnackbarAlert from "../components/SnackbarAlert";
+
 
 
 function RecordTransaction({onSubmit}) {
@@ -55,42 +57,36 @@ function RecordTransaction({onSubmit}) {
 
     return (
     <>
-        {/* Alerts inspired by the frontend lab from class */}
-        <Snackbar
+        <SnackbarAlert
             open={missingInput}
-            autoHideDuration={3000}
+            message="Please fill in all inputs before submitting the form."
             onClose={closeAlert}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
-            <Alert severity="error">Please fill in all inputs before submitting the form.</Alert>
-        </Snackbar>
-
-        <Snackbar
+            severity="error"
+        />
+        <SnackbarAlert
             open={nonNumericInput}
-            autoHideDuration={3000}
+            message="Please only include numbers in the form."
             onClose={closeAlert}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
-            <Alert severity="error">Please only include numbers in the form.</Alert>
-        </Snackbar>
+            severity="error"
+        />
 
         <div className="currency-row">
-        <div>
-            <Typography variant="subtitle1" align="center" className="currency-label">
-                USD
-                <img src={usaFlag} className="flag-converter" alt={"USAFlag"} />
-            </Typography>
-        </div>
-        <div>
-            <TextField
-                variant="outlined"
-                className="amount-textfield"
-                fullWidth
-                label="Enter amount of USD in exchange"
-                value={usdAmount}
-                onChange={handleUsdAmountChange}
-            />
-        </div>
+            <div>
+                <Typography variant="subtitle1" align="center" className="currency-label">
+                    USD
+                    <img src={usaFlag} className="flag-converter" alt={"USAFlag"} />
+                </Typography>
+            </div>
+            <div>
+                <TextField
+                    variant="outlined"
+                    className="amount-textfield"
+                    fullWidth
+                    label="Enter amount of USD in exchange"
+                    value={usdAmount}
+                    onChange={handleUsdAmountChange}
+                />
+            </div>
     </div>
 
         <div className="currency-row">

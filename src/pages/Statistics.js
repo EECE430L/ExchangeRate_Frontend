@@ -5,15 +5,46 @@ import RateGraph from "../components/RateGraph";
 import PercentChange from "../components/PercentChange"
 import RateCard from "../components/RateCard"
 import { transactionType } from "../enums/transactionType.js";
+import {baseUrl} from "../config/Config";
 
 function Statistics(props) {
+    let [numberTransactionsBuyUsd, setNumberTransactionsBuyUsd] = useState("Not available");
+    let [numberTransactionsSellUsd, setNumberTransactionsSellUsd] = useState("Not available");
+    let [buyUsdPercentChange, setBuyUsdPercentChange] = useState(0);
+    let [sellUsdPercentChange, setSellUsdPercentChange] = useState(0);
+
+
     const [width, setWidth] = useState(620);
     const [height, setHeight] = useState(500);
 
     // I wanted to set the width and height property of the graph based on the size of the wrapper-content div
     // since LineChart expects fixed values for the dimensions, so I could not use simple CSS,
-    // so I used ChatGPT to learn how to get the size of the div and add an event listener to resizes
+    // so I used ChatGPT to learn how to get the size of the div and add an event listener to resize it
     useEffect(() => {
+        async function fetchNumberTransactions() {
+            try {
+                const response = await fetch(`${baseUrl}/statistics/todays-transactions`);
+                const data = await response.json();
+                setNumberTransactionsBuyUsd(data.num_lbp_to_usd_transactions);
+                setNumberTransactionsSellUsd(data.num_usd_to_lbp_transactions);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchNumberTransactions();
+
+        async function fetchPercentChange() {
+            try {
+                const response = await fetch(`${baseUrl}/statistics//rates-percent-change`);
+                const data = await response.json();
+                setBuyUsdPercentChange(data.percent_change_LBP_to_USD);
+                setSellUsdPercentChange(data.percent_change_USD_to_LBP);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchNumberTransactions();
+
         function handleResize() {
             const wrapperContent = document.querySelector(".wrapper-content");
             setWidth(wrapperContent.clientWidth * 0.9);
@@ -75,8 +106,8 @@ function Statistics(props) {
                     24-Hour Exchange Rates Percent Change
                 </h2>
                 <PercentChange
-                    buyPercentChange={1.22}
-                    sellPercentChange={-1.33}
+                    buyPercentChange={buyUsdPercentChange}
+                    sellPercentChange={sellUsdPercentChange}
                 />
                 <hr />
 
@@ -86,12 +117,14 @@ function Statistics(props) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <span style={{ margin: '0 10px' }}>
                         <RateCard className="rate-card"
-                                  rate={"322"}
+                                  rate={numberTransactionsSellUsd}
+                                  number={true}
                                   exchange_direction={transactionType.UsdToLbp} />
                     </span>
                     <span style={{ margin: '0 10px' }}>
                         <RateCard className="rate-card"
-                                  rate={"176"}
+                                  rate={numberTransactionsBuyUsd}
+                                  number={true}
                                   exchange_direction={transactionType.LbpToUsd} />
                     </span>
                 </div>

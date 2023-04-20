@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import "../css/signIn.css";
 import logo from "../media/icon.png";
-import {Alert, Button, Snackbar, TextField} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import AuthContext from "../context/AuthContext";
+import SnackbarAlert from "../components/SnackbarAlert";
 import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
@@ -10,9 +11,11 @@ const SignInPage = () => {
     let [user_name, setUser_name] = useState("");
     let [password, setPassword] = useState("");
     let [missingInput, setMissingInput] = useState(false);
+    let [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
+    let [accountLoginSuccess, setAccountLoginSuccess] = useState(false);
+
     let navigate = useNavigate();
     const { signup, login } = useContext(AuthContext);
-
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -34,13 +37,15 @@ const SignInPage = () => {
         }
         if (activeTab === "signIn") {
             await login({ user_name, password });
-            navigate("/");
+            setAccountLoginSuccess(true);
+            // navigate("/");
         } else {
             try {
                 //awaiting signup's completion before logging in to avoid race conditions
                 await signup({ user_name, password });
                 await login({ user_name, password });
-                navigate("/");
+                setAccountCreationSuccess(true);
+                // navigate("/");
             } catch (error) {
                 console.error(error);
             }
@@ -48,19 +53,35 @@ const SignInPage = () => {
     }
 
     function closeAlert() {
+        setAccountCreationSuccess(false);
+        setAccountLoginSuccess(false);
+        navigate("/");
+    };
+
+    function closeMissingInputAlert() {
         setMissingInput(false);
     };
 
     return (
         <>
-            <Snackbar
+            <SnackbarAlert
                 open={missingInput}
-                autoHideDuration={3000}
+                message="Please fill in all inputs before submitting the form."
+                onClose={closeMissingInputAlert}
+                severity="error"
+            />
+            <SnackbarAlert
+                open={accountCreationSuccess}
+                message="Account created successfully."
                 onClose={closeAlert}
-                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-            >
-                <Alert severity="error">Please fill in all inputs before submitting the form.</Alert>
-            </Snackbar>
+                severity="success"
+            />
+            <SnackbarAlert
+                open={accountLoginSuccess}
+                message="Successfully logged in."
+                onClose={closeAlert}
+                severity="success"
+            />
 
             <div className="wrapper sign-in-wrapper">
                 <div className="header">

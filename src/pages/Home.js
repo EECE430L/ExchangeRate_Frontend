@@ -10,6 +10,7 @@ function Home() {
   let [buyUsdRate, setBuyUsdRate] = useState("Not available");
   let [sellUsdRate, setSellUsdRate] = useState("Not available");
 
+    //API call in useEffect to ensure that exchange rates fetched before component is rendered
     useEffect(() => {
         async function fetchExchangeRates() {
             try {
@@ -34,10 +35,16 @@ function Home() {
         <div className="home-card home-card-rates">
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
-                <RateCard className="rate-card" rate={sellUsdRate} exchange_direction={transactionType.UsdToLbp} />
+                <RateCard className="rate-card"
+                          rate={sellUsdRate}
+                          number={false}
+                          exchange_direction={transactionType.UsdToLbp} />
             </span>
             <span style={{ margin: '0 10px' }}>
-                <RateCard className="rate-card" rate={buyUsdRate} exchange_direction={transactionType.LbpToUsd} />
+                <RateCard className="rate-card"
+                          rate={buyUsdRate}
+                          number={false}
+                          exchange_direction={transactionType.LbpToUsd} />
             </span>
           </div>
         </div>
