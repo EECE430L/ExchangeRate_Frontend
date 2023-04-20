@@ -9,7 +9,6 @@ function RateCard ({ rate, exchange_direction }) {
   let [flagLeft, setFlagLeft] = useState(usaFlag);
   let [altLeft, setAltLeft] = useState("USAFlag");
   let [currencyLeft, setCurrencyLeft] = useState("USD");
-  let [exchangeRate, setExchangeRate] = useState(rate)
   let [flagRight, setFlagRight] = useState(lebanonFlag);
   let [altRight, setAltRight] = useState("LebFlag");
   let [currencyRight, setCurrencyRight] = useState("LBP");
@@ -35,12 +34,6 @@ function RateCard ({ rate, exchange_direction }) {
         }
     }, [exchange_direction]);
 
-    useEffect(() => {
-        if (rate === "0") {
-            setExchangeRate("Not available")
-        }
-    }, [rate]);
-
   return (
     <div className="rate-card">
       <div className="rates-card-header">
@@ -59,7 +52,7 @@ function RateCard ({ rate, exchange_direction }) {
         />
       </div>
       <div className="rates-card-body">
-        <p>{exchangeRate}</p>
+          <p>{rate == "0" ? "Not available" : rate}</p>
       </div>
     </div>
   );

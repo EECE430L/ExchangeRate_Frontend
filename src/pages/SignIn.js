@@ -1,34 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import "../css/signIn.css";
-import PercentChange from "../components/PercentChange";
-import RateCard from "../components/RateCard";
-import {transactionType} from "../enums/transactionType";
-import RateGraph from "../components/RateGraph";
 import logo from "../media/icon.png";
 import {Alert, Button, Snackbar, TextField} from "@mui/material";
+import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
-    const [activeTab, setActiveTab] = useState('signIn');
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    let [activeTab, setActiveTab] = useState('signIn');
+    let [user_name, setUser_name] = useState("");
+    let [password, setPassword] = useState("");
     let [missingInput, setMissingInput] = useState(false);
+    let navigate = useNavigate();
+    const { signup, login } = useContext(AuthContext);
 
-    const toggleTab = (tab) => {
+
+    const handleTabChange = (tab) => {
         setActiveTab(tab);
     };
 
     const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+        setUser_name(event.target.value);
     };
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     };
 
-    const handleSignInButtonClick = (event) => {
-        if (!username || !password) {
+    //made asynchronous to avoid race conditions
+    const handleSignInButtonClick = async (event) => {
+        if (!user_name || !password) {
             setMissingInput(true);
             return;
+        }
+        if (activeTab === "signIn") {
+            await login({ user_name, password });
+            navigate("/");
+        } else {
+            try {
+                //awaiting signup's completion before logging in to avoid race conditions
+                await signup({ user_name, password });
+                await login({ user_name, password });
+                navigate("/");
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 
@@ -58,13 +73,13 @@ const SignInPage = () => {
                     <div className="tabs">
                         <button
                             className={activeTab === 'signIn' ? 'active' : ''}
-                            onClick={() => toggleTab('signIn')}
+                            onClick={() => handleTabChange('signIn')}
                         >
                             Sign In
                         </button>
                         <button
                             className={activeTab === 'signUp' ? 'active' : ''}
-                            onClick={() => toggleTab('signUp')}
+                            onClick={() => handleTabChange('signUp')}
                         >
                             Sign Up
                         </button>
@@ -79,7 +94,7 @@ const SignInPage = () => {
                         className="amount-textfield sign-in-textfield"
                         fullWidth
                         label="Username"
-                        value={username}
+                        value={user_name}
                         onChange={handleUsernameChange}
                         inputProps={{
                             style: { padding: '15px' }
@@ -93,7 +108,7 @@ const SignInPage = () => {
                         label="Password"
                         value={password}
                         onChange={handlePasswordChange}
-
+                        type="password"
                         inputProps={{
                             style: { padding: '15px' }
                         }}

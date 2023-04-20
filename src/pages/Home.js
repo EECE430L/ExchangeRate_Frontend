@@ -1,75 +1,28 @@
 import React from "react";
-import { useState, useEffect, useCallback } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Snackbar,
-  Alert,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import {
-  getUserToken,
-  saveUserToken,
-  clearUserToken,
-} from "../utility/localStorage";
+import { useState, useEffect } from "react";
 import RateCard from "../components/RateCard";
 import ConvertCalculator from "../components/ConvertCalculator";
 import { transactionType } from "../enums/transactionType.js";
 import "../css/home.css";
+import { baseUrl } from "../config/Config.js"
 
 function Home() {
-  console.log(window.innerWidth);
-  const States = {
-    PENDING: "PENDING",
-    USER_CREATION: "USER_CREATION",
-    USER_LOG_IN: "USER_LOG_IN",
-    USER_AUTHENTICATED: "USER_AUTHENTICATED",
-  };
+  let [buyUsdRate, setBuyUsdRate] = useState("Not available");
+  let [sellUsdRate, setSellUsdRate] = useState("Not available");
 
-  let [buyUsdRate, setBuyUsdRate] = useState(null);
-  let [sellUsdRate, setSellUsdRate] = useState(null);
-  let [lbpInput, setLbpInput] = useState("");
-  let [usdInput, setUsdInput] = useState("");
-  // let [transactionType, setTransactionType] = useState("usd-to-lbp");
-  let [calculatorUsdValue, setCalculatorUsdValue] = useState("");
-  let [calculatorLbpValue, setCalculatorLbpValue] = useState("");
-  let [conversionType, setConversionType] = useState("usd-to-lbp");
-  let [userTransactions, setUserTransactions] = useState([]);
-  let [userToken, setUserToken] = useState(getUserToken());
-  let [authState, setAuthState] = useState(States.PENDING);
-
-  function convertItem() {
-    if (conversionType == "usd-to-lbp") {
-      setCalculatorLbpValue(calculatorUsdValue * sellUsdRate);
-    } else {
-      setCalculatorUsdValue(calculatorLbpValue / buyUsdRate);
-    }
-  }
-
-  async function addItem() {
-    const headers = { "Content-type": "application/json" };
-
-    if (userToken) {
-      headers["Authorization"] = "Bearer " + userToken;
-    }
-
-    const response = await fetch(`$dummyURL/transaction`, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify({
-        lbp_amount: parseFloat(lbpInput),
-        usd_amount: parseFloat(usdInput),
-        usd_to_lbp: transactionType === "usd-to-lbp",
-      }),
-    });
-    setLbpInput("");
-    setUsdInput("");
-    // fetchRates();
-  }
+    useEffect(() => {
+        async function fetchExchangeRates() {
+            try {
+                const response = await fetch(`${baseUrl}/exchangeRate`);
+                const data = await response.json();
+                setBuyUsdRate(data.lbp_to_usd);
+                setSellUsdRate(data.usd_to_lbp);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchExchangeRates();
+    }, []);
 
   return (
       <div>
@@ -81,11 +34,11 @@ function Home() {
         <div className="home-card home-card-rates">
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <span style={{ margin: '0 10px' }}>
-                <RateCard className="rate-card" rate={"1500"} exchange_direction={transactionType.UsdToLbp} />
+                <RateCard className="rate-card" rate={sellUsdRate} exchange_direction={transactionType.UsdToLbp} />
             </span>
             <span style={{ margin: '0 10px' }}>
-            <RateCard className="rate-card" rate={"0"} exchange_direction={transactionType.LbpToUsd} />
-          </span>
+                <RateCard className="rate-card" rate={buyUsdRate} exchange_direction={transactionType.LbpToUsd} />
+            </span>
           </div>
         </div>
 
@@ -93,7 +46,7 @@ function Home() {
           Currency Converter
         </h2>
         <div className="home-card home-card-converter">
-          <ConvertCalculator usdToLbpRate={1500} lbpToUsdRate={1500} />
+          <ConvertCalculator usdToLbpRate={sellUsdRate} lbpToUsdRate={buyUsdRate} />
         </div>
       </div>
   );

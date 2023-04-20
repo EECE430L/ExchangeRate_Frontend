@@ -18,7 +18,6 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
     let [resultValue, setResultValue] = useState("");
     let [conversionType, setConversionType] = useState(transactionType.UsdToLbp);
 
-
     //source: https://stackoverflow.com/questions/58584258/too-many-re-renders-with-react-hooks
     useEffect(() => {
         if (conversionType === transactionType.LbpToUsd) {
@@ -57,9 +56,19 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
             return;
         }
         if (conversionType === transactionType.UsdToLbp) {
-            setResultValue((parseFloat(convertValue) * usdToLbpRate).toString());
+            if (usdToLbpRate == "0"){
+                setResultValue("Rate not available at this time");
+            }
+            else {
+                setResultValue((parseFloat(convertValue) * usdToLbpRate).toString());
+            }
         } else {
-            setResultValue((parseFloat(convertValue) / lbpToUsdRate).toString());
+            if (lbpToUsdRate === "0"){
+                setResultValue("Rate not available at this time");
+            }
+            else {
+                setResultValue((parseFloat(convertValue) / lbpToUsdRate).toString());
+            }
         }
     };
 

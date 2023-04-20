@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/navbar.css";
 import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import { getUserToken } from "../utility/localStorage";
 
 function Navbar() {
   //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
   let [showBars, setShowBars] = useState(false);
-  const [active, setActive] = useState("nav-menu");
-  const [icon, setIcon] = useState("nav-toggler");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [active, setActive] = useState("nav-menu");
+  let [icon, setIcon] = useState("nav-toggler");
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  let navigate = useNavigate();
 
   //source: https://stackoverflow.com/questions/50644976/react-button-onclick-redirect-page
-  let navigate = useNavigate();
   function redirectSignIn() {
     navigate("/sign-in");
+  }
+
+  //made logout asynchronous for safety (ensuring user is properly logged out before proceeding)
+  const handleLogOut = async (event) => {
+    await logout();
+    navigate("/");
   }
 
   const navToggle = () => {
@@ -57,8 +65,12 @@ function Navbar() {
           </a>
         </li>
       </ul>
-      {isLoggedIn ? (
-        <Button className="sign-in-button">Log Out</Button>
+      {isAuthenticated ? (
+        <Button
+            className="sign-in-button"
+            onClick={handleLogOut}>
+          Log Out
+        </Button>
       ) : (
         <Button
           className="sign-in-button"

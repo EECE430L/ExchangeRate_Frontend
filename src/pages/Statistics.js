@@ -17,7 +17,7 @@ function Statistics(props) {
         function handleResize() {
             const wrapperContent = document.querySelector(".wrapper-content");
             setWidth(wrapperContent.clientWidth * 0.9);
-            setHeight(width/1.4);
+            setHeight(wrapperContent.clientHeight * 0.4);
         }
         window.addEventListener("resize", handleResize);
         handleResize();
