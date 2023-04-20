@@ -3,19 +3,40 @@ import "../css/percentChange.css";
 
 function PercentChange({ buyPercentChange, sellPercentChange }) {
     const formatPercentChange = (percentChange) => {
+        if (isNaN(percentChange)) {
+            return (
+                <span className={`percent-change zero`}>
+                <span>N/A</span>
+            </span>
+            );
+        }
+
         const formattedPercentChange = percentChange.toFixed(2);
 
-        const isPositive = formattedPercentChange >= 0;
-        const percentChangeClassName = isPositive ? 'positive' : 'negative';
-        const arrowSymbol = isPositive ? '\u2191' : '\u2193';
-        const signSymbol = isPositive ? '+' : null;
+        var percentChangeClassName;
+        var arrowSymbol;
+        var signSymbol;
+
+        if (formattedPercentChange > 0){
+            percentChangeClassName = 'positive';
+            arrowSymbol = '\u2191';
+            signSymbol = '+';
+        }
+        else if (formattedPercentChange < 0){
+            percentChangeClassName = 'negative';
+            arrowSymbol = '\u2193';
+            signSymbol = null;
+        }
+        else {
+            percentChangeClassName = 'zero';
+            arrowSymbol = null;
+            signSymbol = null;
+        }
 
         return (
             <span className={`percent-change ${percentChangeClassName}`}>
-        <span>{signSymbol}</span>
-                {formattedPercentChange}%&nbsp;
-        <span>{arrowSymbol}</span>
-      </span>
+                <span>{signSymbol} {formattedPercentChange}%&nbsp; {arrowSymbol}</span>
+            </span>
         );
     };
 

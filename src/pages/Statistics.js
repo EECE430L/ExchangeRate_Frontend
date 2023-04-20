@@ -43,7 +43,7 @@ function Statistics(props) {
                 console.error(error);
             }
         }
-        fetchNumberTransactions();
+        fetchPercentChange();
 
         function handleResize() {
             const wrapperContent = document.querySelector(".wrapper-content");
@@ -87,12 +87,6 @@ function Statistics(props) {
         { date: "2022-11-01", rate: 2500 + Math.random() * 500 },
         { date: "2022-12-01", rate: 2600 + Math.random() * 500 },
     ];
-
-    const todayBuyRate = Math.floor(Math.random() * 200 + 1400); // generates a random number between 1400 and 1600
-    const yesterdayBuyRate = Math.floor(Math.random() * 200 + 1400);
-    const todaySellRate = Math.floor(Math.random() * 200 + 1400);
-    const yesterdaySellRate = Math.floor(Math.random() * 200 + 1400);
-
 
     return (
         <div className="wrapper">
