@@ -12,7 +12,6 @@ function PercentChange({ buyPercentChange, sellPercentChange }) {
         }
 
         const formattedPercentChange = percentChange.toFixed(2);
-
         var percentChangeClassName;
         var arrowSymbol;
         var signSymbol;
