@@ -5,7 +5,7 @@ import usaFlag from "../media/usaFlag.png";
 import lebanonFlag from "../media/lebanonFlag.png";
 import { transactionType } from "../enums/transactionType.js";
 
-function RateCard ({ rate, number, exchange_direction }) {
+function RateCard ({ rate, isQuantity, exchange_direction }) {
   let [flagLeft, setFlagLeft] = useState(usaFlag);
   let [altLeft, setAltLeft] = useState("USAFlag");
   let [currencyLeft, setCurrencyLeft] = useState("USD");
@@ -52,7 +52,7 @@ function RateCard ({ rate, number, exchange_direction }) {
         />
       </div>
       <div className="rates-card-body">
-          <p>{(rate == "0" && !number) ? "Not available" : rate}</p>
+          <p>{(rate == "0" && !isQuantity) ? "Not available" : rate}</p>
       </div>
     </div>
   );

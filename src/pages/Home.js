@@ -37,13 +37,13 @@ function Home() {
             <span style={{ margin: '0 10px' }}>
                 <RateCard className="rate-card"
                           rate={sellUsdRate}
-                          number={false}
+                          isQuantity={false}
                           exchange_direction={transactionType.UsdToLbp} />
             </span>
             <span style={{ margin: '0 10px' }}>
                 <RateCard className="rate-card"
                           rate={buyUsdRate}
-                          number={false}
+                          isQuantity={false}
                           exchange_direction={transactionType.LbpToUsd} />
             </span>
           </div>

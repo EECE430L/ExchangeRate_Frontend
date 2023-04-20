@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import RateGraph from "../components/RateGraph";
 import PercentChange from "../components/PercentChange"
 import RateCard from "../components/RateCard"
+import Calender from "../components/Calender";
 import { transactionType } from "../enums/transactionType.js";
 import {baseUrl} from "../config/Config";
+import { Button } from "@mui/material";
 
 function Statistics(props) {
     let [numberTransactionsBuyUsd, setNumberTransactionsBuyUsd] = useState("Not available");
@@ -14,8 +16,31 @@ function Statistics(props) {
     let [sellUsdPercentChange, setSellUsdPercentChange] = useState(0);
     let [fluctuationsUsdLbp, setFluctuationsUsdLbp] = useState([]);
     let [fluctuationsLbpUsd, setFluctuationsLbpUsd] = useState([]);
+    let [startDate, setStartDate] = useState(null);
+    let [endDate, setEndDate] = useState(null);
     const [width, setWidth] = useState(620);
     const [height, setHeight] = useState(500);
+
+
+    function handleStartDateChange (date) {
+        setStartDate(date);
+    }
+
+    function handleEndDateChange (date) {
+        setEndDate(date);
+    }
+
+    function handleRenderGraphButtonClick() {
+        if (!startDate || !endDate){
+            return;
+        }
+        fetchFluctuationUsdLbp(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate(),
+            endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate());
+        fetchFluctuationLbpUsd(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate(),
+            endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate());
+        console.log(fluctuationsUsdLbp);
+    }
+
 
     async function fetchNumberTransactions() {
         try {
@@ -81,11 +106,7 @@ function Statistics(props) {
     useEffect(() => {
         fetchPercentChange();
         fetchNumberTransactions();
-        fetchFluctuationUsdLbp(2023, 4, 1, 2023, 4, 19);
-        fetchFluctuationLbpUsd(2023, 4, 1, 2023, 4, 19);
-        console.log(fluctuationsUsdLbp);
-    }, []);
-
+        }, []);
 
 
     // I wanted to set the width and height property of the graph based on the size of the wrapper-content div
@@ -104,36 +125,6 @@ function Statistics(props) {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
-    const buyData = [
-        { date: "2022-01-01", rate: 1500 + Math.random() * 500 },
-        { date: "2022-02-01", rate: 1600 + Math.random() * 500 },
-        { date: "2022-03-01", rate: 1700 + Math.random() * 500 },
-        { date: "2022-04-01", rate: 1800 + Math.random() * 500 },
-        { date: "2022-05-01", rate: 1900 + Math.random() * 500 },
-        { date: "2022-06-01", rate: 2000 + Math.random() * 500 },
-        { date: "2022-07-01", rate: 2100 + Math.random() * 500 },
-        { date: "2022-08-01", rate: 2200 + Math.random() * 500 },
-        { date: "2022-09-01", rate: 2300 + Math.random() * 500 },
-        { date: "2022-10-01", rate: 2400 + Math.random() * 500 },
-        { date: "2022-11-01", rate: 2500 + Math.random() * 500 },
-        { date: "2022-12-01", rate: 2600 + Math.random() * 500 },
-    ];
-
-    const sellData = [
-        { date: "2022-01-01", rate: 1500 + Math.random() * 500 },
-        { date: "2022-02-01", rate: 1600 + Math.random() * 500 },
-        { date: "2022-03-01", rate: 1700 + Math.random() * 500 },
-        { date: "2022-04-01", rate: 1800 + Math.random() * 500 },
-        { date: "2022-05-01", rate: 1900 + Math.random() * 500 },
-        { date: "2022-06-01", rate: 2000 + Math.random() * 500 },
-        { date: "2022-07-01", rate: 2100 + Math.random() * 500 },
-        { date: "2022-08-01", rate: 2200 + Math.random() * 500 },
-        { date: "2022-09-01", rate: 2300 + Math.random() * 500 },
-        { date: "2022-10-01", rate: 2400 + Math.random() * 500 },
-        { date: "2022-11-01", rate: 2500 + Math.random() * 500 },
-        { date: "2022-12-01", rate: 2600 + Math.random() * 500 },
-    ];
 
     return (
         <div className="wrapper">
@@ -159,13 +150,13 @@ function Statistics(props) {
                     <span style={{ margin: '0 10px' }}>
                         <RateCard className="rate-card"
                                   rate={numberTransactionsSellUsd}
-                                  number={true}
+                                  isQuantity={true}
                                   exchange_direction={transactionType.UsdToLbp} />
                     </span>
                     <span style={{ margin: '0 10px' }}>
                         <RateCard className="rate-card"
                                   rate={numberTransactionsBuyUsd}
-                                  number={true}
+                                  isQuantity={true}
                                   exchange_direction={transactionType.LbpToUsd} />
                     </span>
                 </div>
@@ -180,6 +171,24 @@ function Statistics(props) {
                    width={width}
                    height={height}
                 />
+
+                <div className="calender-row" >
+                    <div style={{ marginRight: '20px' }}>
+                        <p>Select Start Date:</p>
+                        <Calender onDateChange={handleStartDateChange} />
+                    </div>
+                    <div>
+                        <p>Select End Date:</p>
+                        <Calender onDateChange={handleEndDateChange} />
+                    </div>
+                </div>
+                <Button
+                    className="render-graph-button"
+                    onClick={handleRenderGraphButtonClick}
+                >
+                    Render Graph
+                </Button>
+
             </div>
         </div>
     );

@@ -45,9 +45,7 @@ body {
 .wrapper {
   width: 50%;
 }
-.wrapper input {
-  width: 300px;
-}
+
 
 .nav {
   display: flex;
