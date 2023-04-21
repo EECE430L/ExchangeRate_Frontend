@@ -57,6 +57,7 @@ function OfferTransaction({ onSubmit }) {
         setOfferAmount("");
         setRequestAmount("");
         setOfferCurrency("");
+        setRequestCurrency("");
     }
 
     function closeAlert() {
