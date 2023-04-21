@@ -81,13 +81,13 @@ const SignInPage = () => {
             />
             <SnackbarAlert
                 open={accountCreationSuccess}
-                message="Account created successfully."
+                message="Account created successfully. Redirecting..."
                 onClose={closeSuccessAlert}
                 severity="success"
             />
             <SnackbarAlert
                 open={accountLoginSuccess}
-                message="Successfully logged in."
+                message="Successfully logged in. Redirecting..."
                 onClose={closeSuccessAlert}
                 severity="success"
             />
