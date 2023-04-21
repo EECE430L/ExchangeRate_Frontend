@@ -11,11 +11,14 @@ const SignInPage = () => {
     let [user_name, setUser_name] = useState("");
     let [password, setPassword] = useState("");
     let [missingInput, setMissingInput] = useState(false);
-    let [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
-    let [accountLoginSuccess, setAccountLoginSuccess] = useState(false);
-
     let navigate = useNavigate();
-    const { signup, login } = useContext(AuthContext);
+    const {
+        signup, login,
+        incorrectCredentials, setIncorrectCredentials,
+        accountLoginSuccess, setAccountLoginSuccess,
+        accountCreationSuccess, setAccountCreationSuccess
+    }
+        = useContext(AuthContext);
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -37,7 +40,6 @@ const SignInPage = () => {
         }
         if (activeTab === "signIn") {
             await login({ user_name, password });
-            setAccountLoginSuccess(true);
             // navigate("/");
         } else {
             try {
@@ -52,34 +54,41 @@ const SignInPage = () => {
         }
     }
 
-    function closeAlert() {
+    function closeErrorAlert() {
+        setMissingInput(false);
+        setIncorrectCredentials(false);
+    }
+
+    function closeSuccessAlert() {
         setAccountCreationSuccess(false);
         setAccountLoginSuccess(false);
         navigate("/");
-    };
-
-    function closeMissingInputAlert() {
-        setMissingInput(false);
-    };
+    }
 
     return (
         <>
             <SnackbarAlert
                 open={missingInput}
                 message="Please fill in all inputs before submitting the form."
-                onClose={closeMissingInputAlert}
+                onClose={closeErrorAlert}
+                severity="error"
+            />
+            <SnackbarAlert
+                open={incorrectCredentials}
+                message="Incorrect credentials."
+                onClose={closeErrorAlert}
                 severity="error"
             />
             <SnackbarAlert
                 open={accountCreationSuccess}
                 message="Account created successfully."
-                onClose={closeAlert}
+                onClose={closeSuccessAlert}
                 severity="success"
             />
             <SnackbarAlert
                 open={accountLoginSuccess}
                 message="Successfully logged in."
-                onClose={closeAlert}
+                onClose={closeSuccessAlert}
                 severity="success"
             />
 

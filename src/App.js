@@ -22,6 +22,9 @@ function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(
         getUserToken() || false
     );
+    const [incorrectCredentials, setIncorrectCredentials] = useState(false);
+    let [accountLoginSuccess, setAccountLoginSuccess] = useState(false);
+    let [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
 
     //if userToken in local storage changes, update isAuthenticated in the context
     useEffect(() => {
@@ -42,6 +45,7 @@ function App() {
                 if (response.ok) {
                     response.json().then((data) => {
                         setIsAuthenticated(true);
+                        setAccountCreationSuccess(true);
                         saveUserToken(data.token);
                     });
                 } else {
@@ -63,12 +67,19 @@ function App() {
             },
         })
             .then((response) => {
+                if (response.status == 401 || response.status == 404) {
+                    console.log("error")
+                    setIncorrectCredentials(true);
+                }
                 if (response.ok) {
                     response.json().then((data) => {
+                        console.log("success");
                         setIsAuthenticated(true);
+                        setAccountLoginSuccess(true);
                         saveUserToken(data.token);
                     });
-                } else {
+                }
+                else {
                     throw new Error("Login failed");
                 }
             })
@@ -89,6 +100,12 @@ function App() {
       <AuthContext.Provider
           value={{
               isAuthenticated,
+              incorrectCredentials,
+              setIncorrectCredentials,
+              accountLoginSuccess,
+              setAccountLoginSuccess,
+              accountCreationSuccess,
+              setAccountCreationSuccess,
               signup,
               login,
               logout,

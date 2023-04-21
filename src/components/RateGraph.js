@@ -17,7 +17,7 @@ function RateGraph({ buyData, sellData, width, height }) {
             <Tooltip
                 contentStyle={{ backgroundColor: 'white' }}
                 labelStyle={{ fontWeight: 'bold' }}
-                formatter={(value) => `$${value.toFixed(2)}`}
+                formatter={(value) => `${value.toFixed(2)}`}
                 labelFormatter={(label) => formatDate(label)}
             />
             <Legend />
