@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "../css/navbar.css";
 import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { getUserToken } from "../utility/localStorage";
 
 function Navbar() {
   //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
@@ -60,7 +59,7 @@ function Navbar() {
         {!showBars ? <div className="vertical-line"></div> : null}
 
         <li className="nav-item">
-          <a href="/transaction-service" className="nav-text">
+            <a href={isAuthenticated ? "/transaction-service" : "/sign-in"} className="nav-text">
             Transaction Service
           </a>
         </li>

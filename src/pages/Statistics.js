@@ -188,7 +188,6 @@ function Statistics(props) {
                 >
                     Render Graph
                 </Button>
-
             </div>
         </div>
     );
