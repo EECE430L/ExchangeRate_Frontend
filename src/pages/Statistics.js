@@ -10,8 +10,10 @@ import { baseUrl } from "../config/Config";
 import { Button } from "@mui/material";
 
 function Statistics(props) {
-  let [numberTransactionsBuyUsd, setNumberTransactionsBuyUsd] = useState("Not available");
-  let [numberTransactionsSellUsd, setNumberTransactionsSellUsd] = useState("Not available");
+  let [numberTransactionsBuyUsd, setNumberTransactionsBuyUsd] =
+    useState("Not available");
+  let [numberTransactionsSellUsd, setNumberTransactionsSellUsd] =
+    useState("Not available");
   let [buyPercentChange, setBuyPercentChange] = useState(0);
   let [sellPercentChange, setSellPercentChange] = useState(0);
   let [fluctuationsUsdLbp, setFluctuationsUsdLbp] = useState([]);
@@ -29,13 +31,26 @@ function Statistics(props) {
     setEndDate(date);
   }
 
-  function handleRenderGraphButtonClick() {
+  async function handleRenderGraphButtonClick() {
     if (!startDate || !endDate) {
       return;
     }
-    fetchFluctuationUsdLbp(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate(), endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate());
-    fetchFluctuationLbpUsd(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate(), endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate());
-    console.log(fluctuationsUsdLbp);
+    await fetchFluctuationUsdLbp(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate(),
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
+    await fetchFluctuationLbpUsd(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate(),
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
   }
 
   async function fetchNumberTransactions() {
@@ -51,7 +66,9 @@ function Statistics(props) {
 
   async function fetchPercentChange() {
     try {
-      const response = await fetch(`${baseUrl}/statistics/rates-percent-change`);
+      const response = await fetch(
+        `${baseUrl}/statistics/rates-percent-change`
+      );
       const data = await response.json();
       setBuyPercentChange(data.percent_change_LBP_to_USD);
       setSellPercentChange(data.percent_change_USD_to_LBP);
@@ -61,7 +78,14 @@ function Statistics(props) {
   }
 
   //source: https://stackoverflow.com/questions/37230555/get-with-query-string-with-fetch-in-react-native
-  async function fetchFluctuationUsdLbp(startYear, startMonth, startDay, endYear, endMonth, endDay) {
+  async function fetchFluctuationUsdLbp(
+    startYear,
+    startMonth,
+    startDay,
+    endYear,
+    endMonth,
+    endDay
+  ) {
     try {
       const url = `${baseUrl}/fluctuations/usd-to-lbp?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`;
       const response = await fetch(url);
@@ -70,7 +94,10 @@ function Statistics(props) {
       //source: https://stackoverflow.com/questions/63820286/fetch-request-in-react-how-do-i-map-through-json-array-of-object-inside-of-arra
       const listData = data.map((rateDay) => ({
         date: rateDay.StartDate,
-        rate: rateDay.usdToLbpRate === "No Data Available" ? null : parseFloat(rateDay.usdToLbpRate),
+        rate:
+          rateDay.usdToLbpRate === "No Data Available"
+            ? null
+            : parseFloat(rateDay.usdToLbpRate),
       }));
 
       setFluctuationsUsdLbp(listData);
@@ -79,7 +106,14 @@ function Statistics(props) {
     }
   }
 
-  async function fetchFluctuationLbpUsd(startYear, startMonth, startDay, endYear, endMonth, endDay) {
+  async function fetchFluctuationLbpUsd(
+    startYear,
+    startMonth,
+    startDay,
+    endYear,
+    endMonth,
+    endDay
+  ) {
     try {
       const url = `${baseUrl}/fluctuations/lbp-to-usd?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`;
       const response = await fetch(url);
@@ -87,7 +121,10 @@ function Statistics(props) {
 
       const listData = data.map((rateDay) => ({
         date: rateDay.StartDate,
-        rate: rateDay.lbpToUsdRate === "No Data Available" ? null : parseFloat(rateDay.lbpToUsdRate),
+        rate:
+          rateDay.lbpToUsdRate === "No Data Available"
+            ? null
+            : parseFloat(rateDay.lbpToUsdRate),
       }));
 
       setFluctuationsLbpUsd(listData);
@@ -126,22 +163,45 @@ function Statistics(props) {
 
       <div className="wrapper-content">
         <h2 className="section-title">24-Hour Exchange Rates Percent Change</h2>
-        <PercentChange buyPercentChange={buyPercentChange} sellPercentChange={sellPercentChange} />
+        <PercentChange
+          buyPercentChange={buyPercentChange}
+          sellPercentChange={sellPercentChange}
+        />
         <hr />
 
-        <h2 className="section-title">Number of Transactions in the Last 24 Hours</h2>
+        <h2 className="section-title">
+          Number of Transactions in the Last 24 Hours
+        </h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <span style={{ margin: "0 10px" }}>
-            <RateCard className="rate-card" rate={numberTransactionsSellUsd} isQuantity={true} exchange_direction={transactionType.UsdToLbp} />
+            <RateCard
+              className="rate-card"
+              rate={numberTransactionsSellUsd}
+              isQuantity={true}
+              exchange_direction={transactionType.UsdToLbp}
+            />
           </span>
           <span style={{ margin: "0 10px" }}>
-            <RateCard className="rate-card" rate={numberTransactionsBuyUsd} isQuantity={true} exchange_direction={transactionType.LbpToUsd} />
+            <RateCard
+              className="rate-card"
+              rate={numberTransactionsBuyUsd}
+              isQuantity={true}
+              exchange_direction={transactionType.LbpToUsd}
+            />
           </span>
         </div>
         <hr />
 
-        <h2 className="section-title">Exchange Rates vs. Time Over Last Month</h2>
-        <RateGraph className="rates-graph" buyData={fluctuationsLbpUsd} sellData={fluctuationsUsdLbp} width={width} height={height} />
+        <h2 className="section-title">
+          Exchange Rates vs. Time Over Last Month
+        </h2>
+        <RateGraph
+          className="rates-graph"
+          buyData={fluctuationsLbpUsd}
+          sellData={fluctuationsUsdLbp}
+          width={width}
+          height={height}
+        />
 
         <div className="calender-row">
           <div style={{ marginRight: "20px" }}>
@@ -153,7 +213,10 @@ function Statistics(props) {
             <Calender onDateChange={handleEndDateChange} />
           </div>
         </div>
-        <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
+        <Button
+          className="render-graph-button"
+          onClick={handleRenderGraphButtonClick}
+        >
           Render Graph
         </Button>
       </div>
