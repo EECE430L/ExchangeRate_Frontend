@@ -79,7 +79,7 @@ function RecordTransaction({ onSubmit }) {
       />
       <SnackbarAlert
         open={nonNumericInput}
-        message="Please only include numbers in the form."
+        message="Please only input positive numbers."
         onClose={closeAlert}
         severity="error"
       />
