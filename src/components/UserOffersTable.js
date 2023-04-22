@@ -23,22 +23,6 @@ function UserOffersTable({ isSender, data, handleOffer }) {
     setPage(newpage);
   }
 
-  //source: https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
-  function formatDate(receivedDate) {
-    const date = new Date(receivedDate);
-    date.setHours(date.getHours() + 3);
-
-    const options = {
-      hour: "numeric",
-      minute: "numeric",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      timeZone: "UTC",
-    };
-    return date.toLocaleDateString("en-US", options);
-  }
-
   function formatTransactionType(usdToLbp) {
     if (usdToLbp) {
       return "USD to LBP";

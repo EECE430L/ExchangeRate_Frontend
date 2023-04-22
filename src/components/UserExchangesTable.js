@@ -22,7 +22,7 @@ function UserExchangesTable({ data }) {
   //source: https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
   function formatDate(receivedDate) {
     const date = new Date(receivedDate);
-    date.setHours(date.getHours() + 3);
+    date.setHours(date.getHours() + 9);
 
     const options = {
       hour: "numeric",
