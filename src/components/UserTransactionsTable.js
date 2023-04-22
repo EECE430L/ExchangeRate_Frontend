@@ -18,6 +18,29 @@ function UserTransactionsTable({ data }) {
     setPage(newpage);
   }
 
+  //source: https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
+  function formatDate(receivedDate) {
+    const date = new Date(receivedDate);
+    date.setHours(date.getHours() + 3);
+
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    };
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  function formatTransactionType(usdToLbp) {
+    if (usdToLbp) {
+      return "USD to LBP";
+    }
+    return "LBP to USD";
+  }
+
   //Since MUI Styles is deprecated, to style the top row, I defined an object containing styles and then
   // used the sx property sx={style}
   //source for the idea: https://stackoverflow.com/questions/70625797/how-to-import-makestyles-from-mui
@@ -47,29 +70,23 @@ function UserTransactionsTable({ data }) {
         </TableHead>
         <TableBody>
           {/* Table pagination source: https://www.geeksforgeeks.org/react-mui-tablepagination-api/ */}
-          {data
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((transaction) => (
-              <TableRow
-                key={transaction.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">
-                  {transaction.exchangedWith}
-                </TableCell>
-                <TableCell align="center">
-                  {transaction.transactionType}
-                </TableCell>
-                <TableCell align="center">{transaction.usdAmount}</TableCell>
-                <TableCell align="center">{transaction.lbpAmount}</TableCell>
-                <TableCell align="center">{transaction.date}</TableCell>
-              </TableRow>
-            ))}
+          {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((transaction) => (
+            <TableRow
+              key={transaction.id}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell align="center">{transaction.second_party}</TableCell>
+              <TableCell align="center">{formatTransactionType(transaction.usd_to_lbp)}</TableCell>
+              <TableCell align="center">{transaction.usd_amount}</TableCell>
+              <TableCell align="center">{transaction.lbp_amount}</TableCell>
+              <TableCell align="center">{formatDate(transaction.added_date)}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5]}
+              rowsPerPageOptions={[rowsPerPage]}
               count={data.length}
               rowsPerPage={rowsPerPage}
               page={page}
