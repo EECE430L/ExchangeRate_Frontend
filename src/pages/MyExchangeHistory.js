@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/myExchangeHistory.css";
 import RecordTransaction from "../components/RecordTransaction.js";
-import UserTransactionsTable from "../components/UserTransactionsTable.js";
+import UserExchangesTable from "../components/UserExchangesTable.js";
 import { transactionType } from "../enums/transactionType.js";
 import { baseUrl } from "../config/Config.js";
 import AuthContext from "../context/AuthContext";
@@ -33,14 +33,14 @@ function ExchangeService() {
     <>
       <div className="wrapper user-transactions-table-container">
         <div className="header">
-          <h1>My Transactions</h1>
+          <h1>My Exchange History</h1>
         </div>
         <p className="my-exchanges-instructions">
-          View your transaction history with external exchange services and other users.
+          View your exchange history with external exchange services and other users.
         </p>
         {/* Must wait for transactionsData before rendering component
         source: https://stackoverflow.com/questions/74656680/react-how-to-wait-on-prop-data-before-rendering-child-component */}
-        {transactionsData ? <UserTransactionsTable data={transactionsData} /> : null}
+        {transactionsData ? <UserExchangesTable data={transactionsData} /> : null}
       </div>
       <div style={{ height: "4vh" }}></div>
     </>

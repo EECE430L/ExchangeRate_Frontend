@@ -1,0 +1,13 @@
+.reply-offer-button {
+    color: rgb(0, 33, 65) !important;
+    border-color: rgb(0, 33, 65) !important;
+    height:36.5px !important;
+    font-weight: bold !important;
+    border-width: 2px;
+}
+
+.reply-offer-button:hover {
+    background-color: rgb(35, 80, 128) !important;
+    border-color: rgb(35, 80, 128) !important;
+    color: white !important;
+}

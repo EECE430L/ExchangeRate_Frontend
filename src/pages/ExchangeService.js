@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "../css/exchangeService.css";
 import RecordTransaction from "../components/RecordTransaction.js";
-import UserTransactionsTable from "../components/UserTransactionsTable.js";
+import UserTransactionsTable from "../components/UserExchangesTable.js";
 import OfferTransaction from "../components/OfferTransaction.js";
 import { transactionType } from "../enums/transactionType.js";
 import SnackbarAlert from "../components/SnackbarAlert";

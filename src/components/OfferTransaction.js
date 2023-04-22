@@ -36,10 +36,10 @@ function OfferTransaction({ onSubmit }) {
 
     if (offerCurrency === "USD") {
       setRequestCurrency("USD");
-      setUsdToLbp(true);
+      setUsdToLbp(false);
     } else {
       setRequestCurrency("LBP");
-      setUsdToLbp(false);
+      setUsdToLbp(true);
     }
   }
 

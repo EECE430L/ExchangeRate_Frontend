@@ -5,15 +5,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Statistics from "./pages/Statistics";
 import ExchangeService from "./pages/ExchangeService";
+import PendingOffers from "./pages/PendingOffers";
 import MyExchangeHistory from "./pages/MyExchangeHistory";
 import SignIn from "./pages/SignIn";
 import AuthContext from "./context/AuthContext.js";
 import { baseUrl } from "./config/Config.js";
-import {
-  getUserToken,
-  saveUserToken,
-  clearUserToken,
-} from "./utility/tokenStorage";
+import { getUserToken, saveUserToken, clearUserToken } from "./utility/tokenStorage";
 
 function App() {
   //React Context resets to default values when going to new pages
@@ -23,9 +20,7 @@ function App() {
   //I used multiple sources for this:
   //https://hy.reactjs.org/docs/context.html#contextprovider
   //https://dev.to/dayvster/use-react-context-for-auth-288g
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    getUserToken() || false
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(getUserToken() || false);
   const [incorrectCredentials, setIncorrectCredentials] = useState(false);
   let [accountLoginSuccess, setAccountLoginSuccess] = useState(false);
   let [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
@@ -132,6 +127,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/exchange-service" element={<ExchangeService />} />
+          <Route path="/pending-offers" element={<PendingOffers />} />
           <Route path="/my-exchange-history" element={<MyExchangeHistory />} />
           <Route path="/sign-in" element={<SignIn />} />
         </Routes>{" "}

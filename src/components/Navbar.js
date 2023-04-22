@@ -64,23 +64,19 @@ function Navbar() {
           >
             My Exchanges
           </a>
-          <ul
-            className="dropdown-menu"
-            style={{ listStyleType: "none", paddingInlineStart: "0" }}
-          >
+          <ul className="dropdown-menu" style={{ listStyleType: "none", paddingInlineStart: "0" }}>
             <li>
-              <a
-                href={isAuthenticated ? "/exchange-service" : "/sign-in"}
-                className="nav-text"
-              >
+              <a href={isAuthenticated ? "/exchange-service" : "/sign-in"} className="nav-text">
                 Exchange Service
               </a>
             </li>
             <li>
-              <a
-                href={isAuthenticated ? "/my-exchange-history" : "/sign-in"}
-                className="nav-text"
-              >
+              <a href={isAuthenticated ? "/pending-offers" : "/sign-in"} className="nav-text">
+                Pending Offers
+              </a>
+            </li>
+            <li>
+              <a href={isAuthenticated ? "/my-exchange-history" : "/sign-in"} className="nav-text">
                 My Exchange History
               </a>
             </li>

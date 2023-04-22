@@ -10,7 +10,8 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import TableFooter from "@mui/material/TableFooter";
 
-function UserTransactionsTable({ data }) {
+//source: https://mui.com/material-ui/react-table/
+function UserExchangesTable({ data }) {
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
 
@@ -99,4 +100,4 @@ function UserTransactionsTable({ data }) {
   );
 }
 
-export default UserTransactionsTable;
+export default UserExchangesTable;
