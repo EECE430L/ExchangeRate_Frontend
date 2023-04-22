@@ -12,6 +12,7 @@ const SignInPage = () => {
   let [user_name, setUser_name] = useState("");
   let [password, setPassword] = useState("");
   let [missingInput, setMissingInput] = useState(false);
+  let [notEmail, setNotEmail] = useState(false);
   let navigate = useNavigate();
   const {
     signup,
@@ -51,13 +52,22 @@ const SignInPage = () => {
       return;
     }
     if (activeTab === "signIn") {
-      await login({ user_name, password });
+      return login({ user_name, password });
     } else {
+      if (!email) {
+        setMissingInput(true);
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setNotEmail(true);
+        return;
+      }
       try {
-        //awaiting signup's completion before logging in to avoid race conditions
-        if (await signup({ email, user_name, password })) {
+        const successfulSignUp = await signup({ email, user_name, password });
+        if (successfulSignUp) {
           setAccountCreationSuccess(true);
-          await login({ user_name, password });
+          return login({ user_name, password });
         }
       } catch (error) {
         console.error(error);
@@ -70,6 +80,7 @@ const SignInPage = () => {
     setIncorrectCredentials(false);
     setUsernameTaken(false);
     setEmailTaken(false);
+    setNotEmail(false);
   }
 
   function closeSuccessAlert() {
@@ -83,6 +94,12 @@ const SignInPage = () => {
       <SnackbarAlert
         open={missingInput}
         message="Please fill in all inputs before submitting the form."
+        onClose={closeErrorAlert}
+        severity="error"
+      />
+      <SnackbarAlert
+        open={notEmail}
+        message="Please input a valid email."
         onClose={closeErrorAlert}
         severity="error"
       />

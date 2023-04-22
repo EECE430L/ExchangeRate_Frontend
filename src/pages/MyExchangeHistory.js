@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../css/myExchangeHistory.css";
 import RecordTransaction from "../components/RecordTransaction.js";
 import UserTransactionsTable from "../components/UserTransactionsTable.js";
 import { transactionType } from "../enums/transactionType.js";
 import { baseUrl } from "../config/Config.js";
+import AuthContext from "../context/AuthContext";
 
 function ExchangeService() {
   let [
@@ -14,6 +15,7 @@ function ExchangeService() {
   let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
   let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] =
     useState("");
+  const { isAuthenticated } = useContext(AuthContext);
 
   const transactions = [
     {

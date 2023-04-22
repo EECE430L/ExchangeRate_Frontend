@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../css/exchangeService.css";
 import RecordTransaction from "../components/RecordTransaction.js";
 import UserTransactionsTable from "../components/UserTransactionsTable.js";
 import OfferTransaction from "../components/OfferTransaction.js";
 import { transactionType } from "../enums/transactionType.js";
 import SnackbarAlert from "../components/SnackbarAlert";
+import AuthContext from "../context/AuthContext";
 import { baseUrl } from "../config/Config.js";
 
 function ExchangeService() {
@@ -19,6 +20,7 @@ function ExchangeService() {
   let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
   let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] =
     useState("");
+  const { isAuthenticated } = useContext(AuthContext);
 
   const transactions = [
     {

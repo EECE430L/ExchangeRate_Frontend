@@ -13,7 +13,7 @@ import {
   getUserToken,
   saveUserToken,
   clearUserToken,
-} from "./utility/localStorage";
+} from "./utility/tokenStorage";
 
 function App() {
   //React Context resets to default values when going to new pages
@@ -23,7 +23,6 @@ function App() {
   //I used multiple sources for this:
   //https://hy.reactjs.org/docs/context.html#contextprovider
   //https://dev.to/dayvster/use-react-context-for-auth-288g
-  //
   const [isAuthenticated, setIsAuthenticated] = useState(
     getUserToken() || false
   );
@@ -35,12 +34,16 @@ function App() {
 
   //if userToken in local storage changes, update isAuthenticated in the context
   useEffect(() => {
-    setIsAuthenticated(getUserToken() || false);
+    if (getUserToken()) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
   }, [getUserToken]);
 
   //reference source: https://stackoverflow.com/questions/50275723/react-js-how-to-authenticate-credentials-via-a-fetch-statement
   const signup = useCallback((credentials) => {
-    fetch(`${baseUrl}/user`, {
+    return fetch(`${baseUrl}/user`, {
       method: "POST",
       body: JSON.stringify(credentials),
       headers: {
@@ -48,7 +51,7 @@ function App() {
       },
     })
       .then((response) => {
-        if (response.status === 409) {
+        if (response.status == 409) {
           response.json().then((data) => {
             if (data.message.includes("email")) {
               setEmailTaken(true);
@@ -57,7 +60,7 @@ function App() {
             }
           });
         } else if (response.ok) {
-          response.json().then((data) => {
+          return response.json().then((data) => {
             setIsAuthenticated(true);
             setAccountCreationSuccess(true);
             return true;
@@ -65,7 +68,6 @@ function App() {
         } else {
           throw new Error("Sign up failed");
         }
-        return false;
       })
       .catch((error) => {
         console.error(error);
