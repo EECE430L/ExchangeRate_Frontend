@@ -130,7 +130,7 @@ const SignInPage = () => {
         severity="success"
       />
       <SnackbarAlert
-        open={accountLoginSuccess}
+        open={accountLoginSuccess && !accountCreationSuccess}
         message="Successfully logged in. Redirecting..."
         onClose={closeSuccessAlert}
         severity="success"
