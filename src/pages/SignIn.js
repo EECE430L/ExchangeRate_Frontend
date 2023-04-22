@@ -58,6 +58,8 @@ const SignInPage = () => {
         setMissingInput(true);
         return;
       }
+      //email format verification using regex
+      //source: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         setNotEmail(true);

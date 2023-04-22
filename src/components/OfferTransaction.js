@@ -18,7 +18,7 @@ function OfferTransaction({ onSubmit }) {
   let [requestAmount, setRequestAmount] = useState("");
   let [offerCurrency, setOfferCurrency] = useState("");
   let [requestCurrency, setRequestCurrency] = useState("");
-
+  let [usdToLbp, setUsdToLbp] = useState();
   let [missingInput, setMissingInput] = useState(false);
   let [nonNumericInput, setNonNumericInput] = useState(false);
 
@@ -36,8 +36,10 @@ function OfferTransaction({ onSubmit }) {
 
     if (offerCurrency === "USD") {
       setRequestCurrency("USD");
+      setUsdToLbp(true);
     } else {
       setRequestCurrency("LBP");
+      setUsdToLbp(false);
     }
   }
 
@@ -53,7 +55,8 @@ function OfferTransaction({ onSubmit }) {
       setNonNumericInput(true);
       return;
     }
-    onSubmit(recipientUsername, offerAmount, requestAmount, offerCurrency);
+
+    onSubmit(recipientUsername, usdToLbp, offerAmount, requestAmount);
   }
 
   function handleClearButtonClick() {

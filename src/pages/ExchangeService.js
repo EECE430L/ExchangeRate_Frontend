@@ -7,34 +7,22 @@ import { transactionType } from "../enums/transactionType.js";
 import SnackbarAlert from "../components/SnackbarAlert";
 import AuthContext from "../context/AuthContext";
 import { baseUrl } from "../config/Config.js";
+import { getUserToken } from "../utility/tokenStorage";
 
 function ExchangeService() {
   let [successRecordTransaction, setSuccessRecordTransaction] = useState(false);
   let [errorRecordTransaction, setErrorRecordTransaction] = useState(false);
-
-  let [
-    recipientUsernameOfferTransaction,
-    setRecipientUsernameOfferTransaction,
-  ] = useState("");
+  let [successOfferTransaction, setSuccessOfferTransaction] = useState(false);
+  let [errorOfferTransaction, setErrorOfferTransaction] = useState(false);
+  let [recipientNotFound, setRecipientNotFound] = useState(false);
+  let [recipientUsernameOfferTransaction, setRecipientUsernameOfferTransaction] = useState("");
   let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
   let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
-  let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] =
-    useState("");
+  let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
   const { isAuthenticated } = useContext(AuthContext);
 
-  const transactions = [
-    {
-      id: 1,
-      exchangedWith: "Third Party",
-      transactionType: "USD to LBP",
-      usdAmount: 100,
-      lbpAmount: 150000,
-      date: "2022-04-19",
-    },
-  ];
-
   async function createTransaction(lbp_amount, usd_amount, usd_to_lbp) {
-    const userToken = localStorage.getItem("userToken");
+    const userToken = getUserToken();
     const response = await fetch(`${baseUrl}/transaction`, {
       method: "POST",
       headers: {
@@ -47,7 +35,25 @@ function ExchangeService() {
         usd_to_lbp: usd_to_lbp,
       }),
     });
-    return response.ok;
+    return response;
+  }
+
+  async function createOffer(receiver, usd_to_lbp, amount_offered, amount_requested) {
+    const userToken = getUserToken();
+    const response = await fetch(`${baseUrl}/offer`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify({
+        receiver: receiver,
+        usd_to_lbp: usd_to_lbp,
+        amount_offered: amount_offered,
+        amount_requested: amount_requested,
+      }),
+    });
+    return response;
   }
 
   //to make an API call in this file when a button is clicked in the RecordTransaction component,
@@ -55,16 +61,8 @@ function ExchangeService() {
   //is clicked. I used these links as sources:
   //https://stackoverflow.com/questions/48367998/passing-event-and-props-from-child-to-parent-in-react
   //https://stackoverflow.com/questions/60915262/how-to-pass-function-as-props-from-functional-parent-component-to-child
-  async function handleRecordTransactionSubmit(
-    usdAmount,
-    lbpAmount,
-    exchangeType
-  ) {
-    const responseOk = await createTransaction(
-      usdAmount,
-      lbpAmount,
-      exchangeType
-    );
+  async function handleRecordTransactionSubmit(usdAmount, lbpAmount, exchangeType) {
+    const responseOk = await createTransaction(usdAmount, lbpAmount, exchangeType);
     if (responseOk) {
       setSuccessRecordTransaction(true);
     } else {
@@ -72,30 +70,32 @@ function ExchangeService() {
     }
   }
 
-  function handleOfferTransactionSubmit(
-    recipientUsername,
-    offerAmount,
-    requestAmount,
-    offerCurrency
+  async function handleOfferTransactionSubmit(
+    receiver,
+    usd_to_lbp,
+    amount_offered,
+    amount_requested
   ) {
-    setRecipientUsernameOfferTransaction(recipientUsername);
-    if (offerCurrency === "USD") {
-      setUsdAmountOfferTransaction(offerAmount);
-      setLbpAmountOfferTransaction(requestAmount);
-      setExchangeTypeOfferTransaction(transactionType.UsdToLbp);
+    const response = await createOffer(receiver, usd_to_lbp, amount_offered, amount_requested);
+    if (response.ok) {
+      setRecipientUsernameOfferTransaction(receiver);
+      setSuccessOfferTransaction(true);
+    } else if (response.status == 404) {
+      setRecipientNotFound(true);
     } else {
-      setUsdAmountOfferTransaction(requestAmount);
-      setLbpAmountOfferTransaction(offerAmount);
-      setExchangeTypeOfferTransaction(transactionType.LbpToUsd);
+      setErrorOfferTransaction(true);
     }
   }
 
   function closeSuccessAlert() {
     setSuccessRecordTransaction(false);
+    setSuccessOfferTransaction(false);
   }
 
   function closeErrorAlert() {
     setErrorRecordTransaction(false);
+    setErrorOfferTransaction(false);
+    setRecipientNotFound(false);
   }
 
   return (
@@ -106,10 +106,27 @@ function ExchangeService() {
         onClose={closeSuccessAlert}
         severity="success"
       />
-
       <SnackbarAlert
         open={errorRecordTransaction}
         message="There was an error adding your exchange."
+        onClose={closeErrorAlert}
+        severity="error"
+      />
+      <SnackbarAlert
+        open={successOfferTransaction}
+        message={`Successfully sent the offer to ${recipientUsernameOfferTransaction}.`}
+        onClose={closeSuccessAlert}
+        severity="success"
+      />
+      <SnackbarAlert
+        open={recipientNotFound}
+        message="A user with that username does not exist."
+        onClose={closeErrorAlert}
+        severity="error"
+      />
+      <SnackbarAlert
+        open={errorOfferTransaction}
+        message="There was an error posting your offer."
         onClose={closeErrorAlert}
         severity="error"
       />
@@ -122,9 +139,8 @@ function ExchangeService() {
           </div>
           <div className="flex-child-body">
             <p className="my-exchanges-instructions">
-              To record an exchange you made, please input the amounts of each
-              currency that were exchanged in your transaction. Then, select the
-              type of the exchange.
+              To record an exchange you made, please input the amounts of each currency that were
+              exchanged in your transaction. Then, select the type of the exchange.
             </p>
             <RecordTransaction onSubmit={handleRecordTransactionSubmit} />
           </div>
@@ -135,9 +151,8 @@ function ExchangeService() {
           </div>
           <div className="flex-child-body">
             <p className="my-exchanges-instructions">
-              To offer a transaction to a user, please input their username, the
-              amount you are offering and in which currency, and the amount you
-              are requesting.
+              To offer a transaction to a user, please input their username, the amount you are
+              offering and in which currency, and the amount you are requesting.
             </p>
             <OfferTransaction onSubmit={handleOfferTransactionSubmit} />
           </div>
