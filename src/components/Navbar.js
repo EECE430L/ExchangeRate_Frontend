@@ -18,13 +18,12 @@ function Navbar() {
     navigate("/sign-in");
   }
 
-  //made logout asynchronous for safety (ensuring user is properly logged out before proceeding)
-  const handleLogOut = async (event) => {
+  async function handleLogOut(event) {
     await logout();
     navigate("/");
   }
 
-  const navToggle = () => {
+  function navToggle() {
     if (active === "nav-menu") {
       setActive("nav-menu nav-active");
       setShowBars(true);
@@ -36,7 +35,7 @@ function Navbar() {
     if (icon === "nav-toggler") {
       setIcon("nav-toggler toggle");
     } else setIcon("nav-toggler");
-  };
+  }
 
   return (
     <nav className="nav">
@@ -59,22 +58,41 @@ function Navbar() {
         {!showBars ? <div className="vertical-line"></div> : null}
 
         <li className="nav-item">
-            <a href={isAuthenticated ? "/transaction-service" : "/sign-in"} className="nav-text">
-            Transaction Service
+          <a
+            href={isAuthenticated ? "/my-exchange-history" : "/sign-in"}
+            className="nav-text nav-item"
+          >
+            My Exchanges
           </a>
+          <ul
+            className="dropdown-menu"
+            style={{ listStyleType: "none", paddingInlineStart: "0" }}
+          >
+            <li>
+              <a
+                href={isAuthenticated ? "/exchange-service" : "/sign-in"}
+                className="nav-text"
+              >
+                Exchange Service
+              </a>
+            </li>
+            <li>
+              <a
+                href={isAuthenticated ? "/my-exchange-history" : "/sign-in"}
+                className="nav-text"
+              >
+                My Exchange History
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
       {isAuthenticated ? (
-        <Button
-            className="sign-in-button"
-            onClick={handleLogOut}>
+        <Button className="sign-in-button" onClick={handleLogOut}>
           Log Out
         </Button>
       ) : (
-        <Button
-          className="sign-in-button"
-          onClick={redirectSignIn}
-        >
+        <Button className="sign-in-button" onClick={redirectSignIn}>
           Sign In
         </Button>
       )}

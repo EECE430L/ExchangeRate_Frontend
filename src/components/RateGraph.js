@@ -15,6 +15,7 @@ function RateGraph({ buyData, sellData, width, height }) {
     return moment(date).format("MMM DD, YYYY");
   };
 
+  console.log(buyData);
   return (
     //source: https://recharts.org/en-US/api/LineChart
     <LineChart width={width} height={height}>

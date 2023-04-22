@@ -118,3 +118,28 @@ ul {
   padding-bottom: 30px;
   margin-bottom: 12px;
 }
+
+.nav-item:hover .dropdown-menu {
+  display: block;
+  border: 2px solid white;
+  border-top: 0;
+  outline: 2px solid rgb(0, 33, 65);
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  background-color: rgb(0, 33, 65);
+}
+
+.dropdown-menu a {
+  display: block;
+  color: white;
+  text-align: left;
+  padding: 0.5vh 1vw;
+}
+
+.dropdown-menu a:hover {
+  background-color: #00356d;
+}

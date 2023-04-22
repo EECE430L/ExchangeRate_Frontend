@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/transactionService.css";
+import "../css/exchangeService.css";
 import RecordTransaction from "../components/RecordTransaction.js";
 import UserTransactionsTable from "../components/UserTransactionsTable.js";
 import OfferTransaction from "../components/OfferTransaction.js";
@@ -7,14 +7,18 @@ import { transactionType } from "../enums/transactionType.js";
 import SnackbarAlert from "../components/SnackbarAlert";
 import { baseUrl } from "../config/Config.js";
 
-function TransactionService() {
+function ExchangeService() {
   let [successRecordTransaction, setSuccessRecordTransaction] = useState(false);
   let [errorRecordTransaction, setErrorRecordTransaction] = useState(false);
 
-  let [recipientUsernameOfferTransaction, setRecipientUsernameOfferTransaction] = useState("");
+  let [
+    recipientUsernameOfferTransaction,
+    setRecipientUsernameOfferTransaction,
+  ] = useState("");
   let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
   let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
-  let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
+  let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] =
+    useState("");
 
   const transactions = [
     {
@@ -49,8 +53,16 @@ function TransactionService() {
   //is clicked. I used these links as sources:
   //https://stackoverflow.com/questions/48367998/passing-event-and-props-from-child-to-parent-in-react
   //https://stackoverflow.com/questions/60915262/how-to-pass-function-as-props-from-functional-parent-component-to-child
-  async function handleRecordTransactionSubmit(usdAmount, lbpAmount, exchangeType) {
-    const responseOk = await createTransaction(usdAmount, lbpAmount, exchangeType);
+  async function handleRecordTransactionSubmit(
+    usdAmount,
+    lbpAmount,
+    exchangeType
+  ) {
+    const responseOk = await createTransaction(
+      usdAmount,
+      lbpAmount,
+      exchangeType
+    );
     if (responseOk) {
       setSuccessRecordTransaction(true);
     } else {
@@ -107,9 +119,10 @@ function TransactionService() {
             <h1>Record an Exchange</h1>
           </div>
           <div className="flex-child-body">
-            <p className="transaction-service-instructions">
-              To record an exchange you made, please input the amounts of each currency that were
-              exchanged in your transaction. Then, select the type of the exchange.
+            <p className="my-exchanges-instructions">
+              To record an exchange you made, please input the amounts of each
+              currency that were exchanged in your transaction. Then, select the
+              type of the exchange.
             </p>
             <RecordTransaction onSubmit={handleRecordTransactionSubmit} />
           </div>
@@ -119,26 +132,17 @@ function TransactionService() {
             <h1>Offer Transaction to User</h1>
           </div>
           <div className="flex-child-body">
-            <p className="transaction-service-instructions">
-              To offer a transaction to a user, please input their username, the amount you are
-              offering and in which currency, and the amount you are requesting.
+            <p className="my-exchanges-instructions">
+              To offer a transaction to a user, please input their username, the
+              amount you are offering and in which currency, and the amount you
+              are requesting.
             </p>
             <OfferTransaction onSubmit={handleOfferTransactionSubmit} />
           </div>
         </div>
       </div>
-      <div className="wrapper user-transactions-table-container">
-        <div className="header">
-          <h1>My Transactions</h1>
-        </div>
-        <p className="transaction-service-instructions">
-          View your transaction history with external exchange services and other users.
-        </p>
-        <UserTransactionsTable data={transactions} />
-      </div>
-      <div style={{ height: "4vh" }}></div>
     </>
   );
 }
 
-export default TransactionService;
+export default ExchangeService;
