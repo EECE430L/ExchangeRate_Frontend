@@ -22,7 +22,6 @@ function UserExchangesTable({ data }) {
   //source: https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
   function formatDate(receivedDate) {
     const date = new Date(receivedDate);
-    date.setHours(date.getHours() + 9);
 
     const options = {
       hour: "numeric",
@@ -30,7 +29,6 @@ function UserExchangesTable({ data }) {
       month: "long",
       day: "numeric",
       year: "numeric",
-      timeZone: "UTC",
     };
     return date.toLocaleDateString("en-US", options);
   }

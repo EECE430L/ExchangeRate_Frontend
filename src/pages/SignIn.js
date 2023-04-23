@@ -13,7 +13,6 @@ const SignInPage = () => {
   let [password, setPassword] = useState("");
   let [missingInput, setMissingInput] = useState(false);
   let [notEmail, setNotEmail] = useState(false);
-  let navigate = useNavigate();
   const {
     signup,
     login,
@@ -28,6 +27,7 @@ const SignInPage = () => {
     emailTaken,
     setEmailTaken,
   } = useContext(AuthContext);
+  let navigate = useNavigate();
 
   function handleTabChange(tab) {
     setActiveTab(tab);

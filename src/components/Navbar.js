@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import "../css/navbar.css";
 import Button from "react-bootstrap/Button";
 import logo from "../media/icon.png";
-import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
@@ -19,7 +19,7 @@ function Navbar() {
   }
 
   async function handleLogOut(event) {
-    await logout();
+    logout();
     navigate("/");
   }
 

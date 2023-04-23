@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
 import "../css/exchangeService.css";
 import RecordTransaction from "../components/RecordTransaction.js";
-import UserTransactionsTable from "../components/UserExchangesTable.js";
 import OfferTransaction from "../components/OfferTransaction.js";
-import { transactionType } from "../enums/transactionType.js";
 import SnackbarAlert from "../components/SnackbarAlert";
 import AuthContext from "../context/AuthContext";
 import { baseUrl } from "../config/Config.js";
 import { getUserToken } from "../utility/tokenStorage";
+import { useNavigate } from "react-router-dom";
 
 function ExchangeService() {
   let [successRecordTransaction, setSuccessRecordTransaction] = useState(false);
@@ -19,7 +18,8 @@ function ExchangeService() {
   let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
   let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
   let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  let navigate = useNavigate();
 
   async function createTransaction(lbp_amount, usd_amount, usd_to_lbp) {
     const userToken = getUserToken();
@@ -62,9 +62,12 @@ function ExchangeService() {
   //https://stackoverflow.com/questions/48367998/passing-event-and-props-from-child-to-parent-in-react
   //https://stackoverflow.com/questions/60915262/how-to-pass-function-as-props-from-functional-parent-component-to-child
   async function handleRecordTransactionSubmit(usdAmount, lbpAmount, exchangeType) {
-    const responseOk = await createTransaction(usdAmount, lbpAmount, exchangeType);
-    if (responseOk) {
+    const response = await createTransaction(usdAmount, lbpAmount, exchangeType);
+    if (response.ok) {
       setSuccessRecordTransaction(true);
+    } else if (response.status == 401) {
+      logout();
+      navigate("/sign-in");
     } else {
       setErrorRecordTransaction(true);
     }
@@ -80,6 +83,9 @@ function ExchangeService() {
     if (response.ok) {
       setRecipientUsernameOfferTransaction(receiver);
       setSuccessOfferTransaction(true);
+    } else if (response.status == 401) {
+      logout();
+      navigate("/sign-in");
     } else if (response.status == 404) {
       setRecipientNotFound(true);
     } else {

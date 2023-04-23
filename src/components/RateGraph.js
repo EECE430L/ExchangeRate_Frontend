@@ -1,23 +1,15 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import moment from "moment";
 
-function RateGraph({ buyData, sellData, width, height }) {
+function RateGraph({ data, width, height }) {
   const formatDate = (date) => {
     return moment(date).format("MMM DD, YYYY");
   };
 
   return (
     //source: https://recharts.org/en-US/api/LineChart
-    <LineChart width={width} height={height}>
+    <LineChart width={width} height={height} data={data}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date" tickFormatter={formatDate} />
       <YAxis />
@@ -30,21 +22,19 @@ function RateGraph({ buyData, sellData, width, height }) {
       <Legend />
       <Line
         type="monotone"
-        dataKey="rate"
+        dataKey="buyRate"
         stroke="#eb3f3f"
         name="Buy USD Rate"
         dot={{ stroke: "red", strokeWidth: 2, fill: "red" }}
         activeDot={{ stroke: "red", strokeWidth: 4, fill: "white" }}
-        data={buyData}
       />
       <Line
         type="monotone"
-        dataKey="rate"
+        dataKey="sellRate"
         stroke="blue"
         name="Sell USD Rate"
         dot={{ stroke: "blue", strokeWidth: 2, fill: "blue" }}
         activeDot={{ stroke: "blue", strokeWidth: 4, fill: "white" }}
-        data={sellData}
       />
     </LineChart>
   );

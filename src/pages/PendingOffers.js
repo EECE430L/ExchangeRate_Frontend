@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/pendingOffers.css";
 import { baseUrl } from "../config/Config.js";
 import { getUserToken } from "../utility/tokenStorage";
 import UserOffersTable from "../components/UserOffersTable";
 import SnackbarAlert from "../components/SnackbarAlert";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext.js";
 
 function PendingOffers() {
   let [receivedOffers, setReceivedOffers] = useState();
   let [sentOffers, setSentOffers] = useState();
   let [acceptOfferSuccess, setAcceptOfferSuccess] = useState(false);
   let [declineOfferSuccess, setDeclineOfferSuccess] = useState(false);
+  const { logout } = useContext(AuthContext);
+  let navigate = useNavigate();
 
   useEffect(() => {
     fetchIncomingOffers();
@@ -27,6 +31,10 @@ function PendingOffers() {
       const data = await response.json();
       setReceivedOffers(data);
     } catch (error) {
+      if (error.response && error.response.status == 401) {
+        logout();
+        navigate("/sign-in");
+      }
       console.error(error);
     }
   }
@@ -34,7 +42,7 @@ function PendingOffers() {
   async function fetchOutgoingOffers() {
     const userToken = getUserToken();
     try {
-      const response = await fetch(`${baseUrl}/offer/sended`, {
+      const response = await fetch(`${baseUrl}/offer/sent`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -42,6 +50,10 @@ function PendingOffers() {
       const data = await response.json();
       setSentOffers(data);
     } catch (error) {
+      if (error.response && error.response.status == 401) {
+        logout();
+        navigate("/sign-in");
+      }
       console.error(error);
     }
   }
@@ -70,6 +82,10 @@ function PendingOffers() {
       }
       fetchIncomingOffers();
     } catch (error) {
+      if (error.response && error.response.status == 401) {
+        logout();
+        navigate("/sign-in");
+      }
       console.error("Error accepting offer:", error);
       throw error;
     }

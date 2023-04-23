@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/myExchangeHistory.css";
-import RecordTransaction from "../components/RecordTransaction.js";
 import UserExchangesTable from "../components/UserExchangesTable.js";
-import { transactionType } from "../enums/transactionType.js";
 import { baseUrl } from "../config/Config.js";
 import AuthContext from "../context/AuthContext";
 import { getUserToken } from "../utility/tokenStorage";
+import { useNavigate } from "react-router-dom";
 
 function ExchangeService() {
   let [transactionsData, setTransactionsData] = useState();
+  const { logout } = useContext(AuthContext);
+  let navigate = useNavigate();
 
-  useEffect(() => {
-    async function fetchUserTransactions() {
-      const userToken = getUserToken();
-      try {
-        const response = await fetch(`${baseUrl}/transaction`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        const data = await response.json();
-        setTransactionsData(data);
-        console.log(data);
-      } catch (error) {
+  async function fetchUserTransactions() {
+    const userToken = getUserToken();
+    try {
+      const response = await fetch(`${baseUrl}/transaction`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      const data = await response.json();
+      setTransactionsData(data);
+      console.log(data);
+    } catch (error) {
+      if (error.response && error.response.status == 401) {
+        logout();
+        navigate("/sign-in");
+      } else {
         console.error(error);
       }
     }
+  }
+
+  useEffect(() => {
     fetchUserTransactions();
   }, []);
 
