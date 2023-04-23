@@ -101,6 +101,10 @@ function PendingOffers() {
 
         <div className="wrapper-content">
           <h2 className="section-title">Incoming Offers</h2>
+          <p className="my-exchanges-instructions">
+            View your incoming offers from other users and choose to accept or decline them. If you
+            accept an offer, it will appear on your Exchange History.
+          </p>
           {/* Must wait for transactionsData before rendering component
         source: https://stackoverflow.com/questions/74656680/react-how-to-wait-on-prop-data-before-rendering-child-component */}
           {receivedOffers && sentOffers ? (
@@ -108,6 +112,10 @@ function PendingOffers() {
           ) : null}
           <hr />
           <h2 className="section-title">Outgoing Offers</h2>
+          <p className="my-exchanges-instructions">
+            View your outgoing offers still pending to be approved or declined by the recipient. If
+            it is accepted by the recipient, it will appear on your Exchange History.
+          </p>
           {/* Must wait for transactionsData before rendering component
         source: https://stackoverflow.com/questions/74656680/react-how-to-wait-on-prop-data-before-rendering-child-component */}
           {receivedOffers && sentOffers ? (
