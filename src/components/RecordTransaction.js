@@ -35,7 +35,7 @@ function RecordTransaction({ onSubmit }) {
   }
 
   useEffect(() => {
-    if (exchangeType == transactionType.usdToLbp) {
+    if (exchangeType == transactionType.UsdToLbp) {
       setUsdToLbp(true);
     } else {
       setUsdToLbp(false);
