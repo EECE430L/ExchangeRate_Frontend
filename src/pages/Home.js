@@ -1,14 +1,19 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import RateCard from "../components/RateCard";
 import ConvertCalculator from "../components/ConvertCalculator";
 import { transactionType } from "../enums/transactionType.js";
 import "../css/home.css";
 import { baseUrl } from "../config/Config.js";
+import AuthContext from "../context/AuthContext";
+import SnackbarAlert from "../components/SnackbarAlert";
 
 function Home() {
   let [buyUsdRate, setBuyUsdRate] = useState("Not available");
   let [sellUsdRate, setSellUsdRate] = useState("Not available");
+  let [showAlert, setShowAlert] = useState(false);
+  const { accountLoginSuccess, accountCreationSuccess, setAccountLoginSuccess } =
+    useContext(AuthContext);
 
   //API call in useEffect to ensure that exchange rates fetched before component is rendered
   useEffect(() => {
@@ -25,8 +30,22 @@ function Home() {
     fetchExchangeRates();
   }, []);
 
+  function closeLoginAlert() {
+    setAccountLoginSuccess(false);
+  }
+
+  useEffect(() => {
+    setShowAlert(accountLoginSuccess && !accountCreationSuccess);
+  }, [accountLoginSuccess, accountCreationSuccess]);
+
   return (
     <div>
+      <SnackbarAlert
+        open={showAlert}
+        message="Successfully logged in."
+        onClose={closeLoginAlert}
+        severity="success"
+      />
       <div>
         <h2 className="home-card-rates-title home-card-title">Today's Exchange Rates</h2>
       </div>

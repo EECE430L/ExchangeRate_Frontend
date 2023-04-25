@@ -52,7 +52,8 @@ const SignInPage = () => {
       return;
     }
     if (activeTab === "signIn") {
-      return login({ user_name, password });
+      await login({ user_name, password });
+      navigate("/");
     } else {
       if (!email) {
         setMissingInput(true);
@@ -87,7 +88,6 @@ const SignInPage = () => {
 
   function closeSuccessAlert() {
     setAccountCreationSuccess(false);
-    setAccountLoginSuccess(false);
     navigate("/");
   }
 
@@ -126,12 +126,6 @@ const SignInPage = () => {
       <SnackbarAlert
         open={accountCreationSuccess}
         message="Account created successfully. Redirecting..."
-        onClose={closeSuccessAlert}
-        severity="success"
-      />
-      <SnackbarAlert
-        open={accountLoginSuccess && !accountCreationSuccess}
-        message="Successfully logged in. Redirecting..."
         onClose={closeSuccessAlert}
         severity="success"
       />
