@@ -42,10 +42,10 @@ function PercentChange({ buyPercentChange, sellPercentChange }) {
   return (
     <div className="percent-change-container">
       <div>
-        <h3>Buy Percent Change: {formatPercentChange(buyPercentChange)}</h3>
+        <h3>Buy USD Percent Change: {formatPercentChange(buyPercentChange)}</h3>
       </div>
       <div>
-        <h3>Sell Percent Change: {formatPercentChange(sellPercentChange)}</h3>
+        <h3>Sell USD Percent Change: {formatPercentChange(sellPercentChange)}</h3>
       </div>
     </div>
   );
