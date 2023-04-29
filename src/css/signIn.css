@@ -3,9 +3,10 @@
     width: 40vw;
 }
 
-.sign-in-wrapper-conte.sign-in-wrapper {
-    height: 50vh;
-    width: 40vw;
+@media (max-width: 805px) {
+    .sign-in-wrapper {
+        width: 100vw;
+    }
 }
 
 .sign-in-wrapper-content {
@@ -13,6 +14,12 @@
     height: 80vh;
 }
 
+@media (max-width: 805px) {
+    .sign-in-wrapper-content {
+        width: 100vw;
+    }
+}
+
 .tabs {
     display: flex;
     justify-content: center;
@@ -21,7 +28,8 @@
 
 .tabs button {
     color: rgb(0, 33, 65);
-    font-size: 2vw;
+    font-size: 25px;
+    white-space: nowrap;
     padding: 1vw;
     margin: 0 0.8vw;
     background-color: transparent;
@@ -37,41 +45,24 @@
     font-family: "Roboto Slab", serif;
     color: #545353;
     margin-bottom: 3vh;
-}
+    text-align: center;
 
-.sign-in-textfield {
-
-}nt {
-    width: 35vw;
-    height: 80vh;
-}
-
-.tabs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.tabs button {
-    color: rgb(0, 33, 65);
-    font-size: 2vw;
-    padding: 1vw;
-    margin: 0 0.8vw;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.tabs button.active {
-    border-bottom: 2px solid rgb(0, 33, 65);
-}
-
-.sign-in-instructions{
-    font-family: "Roboto Slab", serif;
-    color: #545353;
-    margin-bottom: 3vh;
 }
 
 .sign-in-textfield {
     margin-bottom: 2vh !important;
+    width: 3vw !important;
+    margin-right: 0 !important;
+}
+
+@media (max-width: 805px) {
+    .sign-in-textfield {
+        width: 60vw !important;
+    }
+}
+
+.sign-in-textfields-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

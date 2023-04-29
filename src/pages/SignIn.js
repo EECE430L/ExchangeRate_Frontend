@@ -158,44 +158,45 @@ const SignInPage = () => {
             <p className="sign-in-instructions">Create a new account</p>
           )}
 
-          {activeTab === "signUp" ? (
+          <div className="sign-in-textfields-container">
+            {activeTab === "signUp" ? (
+              <TextField
+                variant="outlined"
+                className="amount-textfield sign-in-textfield"
+                fullWidth
+                label="E-mail"
+                value={email}
+                onChange={handleEmailChange}
+                inputProps={{
+                  style: { padding: "15px" },
+                }}
+              />
+            ) : null}
             <TextField
               variant="outlined"
               className="amount-textfield sign-in-textfield"
               fullWidth
-              label="E-mail"
-              value={email}
-              onChange={handleEmailChange}
+              label="Username"
+              value={user_name}
+              onChange={handleUsernameChange}
               inputProps={{
                 style: { padding: "15px" },
               }}
             />
-          ) : null}
-          <TextField
-            variant="outlined"
-            className="amount-textfield sign-in-textfield"
-            fullWidth
-            label="Username"
-            value={user_name}
-            onChange={handleUsernameChange}
-            inputProps={{
-              style: { padding: "15px" },
-            }}
-          />
 
-          <TextField
-            variant="outlined"
-            className="amount-textfield sign-in-textfield"
-            fullWidth
-            label="Password"
-            value={password}
-            onChange={handlePasswordChange}
-            type="password"
-            inputProps={{
-              style: { padding: "15px" },
-            }}
-          />
-
+            <TextField
+              variant="outlined"
+              className="amount-textfield sign-in-textfield"
+              fullWidth
+              label="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              type="password"
+              inputProps={{
+                style: { padding: "15px" },
+              }}
+            />
+          </div>
           <Button
             className="record-transaction-button"
             variant="contained"

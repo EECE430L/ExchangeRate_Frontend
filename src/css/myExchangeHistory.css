@@ -7,4 +7,15 @@
     .user-transactions-table-container {
         min-width: 100vw;
     }
-  }
+}
+
+h1 {
+    white-space: nowrap;
+    font-size: 2vw;
+}
+
+@media (max-width: 805px) {
+    h1 {
+        font-size: 4vw;
+    }
+}
