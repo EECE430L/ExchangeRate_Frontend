@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/offerTransaction.css";
 import { transactionType } from "../enums/transactionType";
 import {
@@ -33,15 +33,17 @@ function OfferTransaction({ onSubmit }) {
   }
   function handleOfferCurrencyChange(event) {
     setOfferCurrency(event.target.value);
+  }
 
+  useEffect(() => {
     if (offerCurrency === "USD") {
-      setRequestCurrency("USD");
-      setUsdToLbp(false);
-    } else {
       setRequestCurrency("LBP");
+      setUsdToLbp(false);
+    } else if (offerCurrency === "LBP") {
+      setRequestCurrency("USD");
       setUsdToLbp(true);
     }
-  }
+  }, [offerCurrency]);
 
   function handleOfferButtonClick() {
     if (!recipientUsername || !offerAmount || !requestAmount || !offerCurrency) {

@@ -8,6 +8,7 @@ import Calender from "../components/Calender";
 import { transactionType } from "../enums/transactionType.js";
 import { baseUrl } from "../config/Config";
 import { Button } from "@mui/material";
+import SnackbarAlert from "../components/SnackbarAlert";
 
 function Statistics(props) {
   let [numberTransactionsBuyUsd, setNumberTransactionsBuyUsd] = useState("Not available");
@@ -17,6 +18,8 @@ function Statistics(props) {
   let [fluctuationsData, setFluctuationsData] = useState([]);
   let [startDate, setStartDate] = useState(null);
   let [endDate, setEndDate] = useState(null);
+  let [invalidDates, setInvalidDates] = useState(false);
+  let [showDateErrorAlert, setShowDateErrorAlert] = useState(false);
   const [width, setWidth] = useState(620);
   const [height, setHeight] = useState(500);
 
@@ -28,8 +31,20 @@ function Statistics(props) {
     setEndDate(date);
   }
 
+  useEffect(() => {
+    if (startDate != null && endDate != null) {
+      if (startDate >= endDate) {
+        setInvalidDates(true);
+      }
+    }
+  }, [startDate, endDate]);
+
   async function handleRenderGraphButtonClick() {
     if (!startDate || !endDate) {
+      return;
+    }
+    if (invalidDates) {
+      setShowDateErrorAlert(true);
       return;
     }
     await fetchFluctuations(
@@ -108,60 +123,80 @@ function Statistics(props) {
     };
   }, []);
 
+  function closeErrorAlert() {
+    setShowDateErrorAlert(false);
+  }
+
   return (
-    <div className="wrapper statistics-wrapper-height">
-      <div className="header">
-        <h1>Statistics</h1>
-      </div>
-
-      <div className="wrapper-content">
-        <h2 className="section-title">Choose a Time Frame</h2>
-        <p className="my-exchanges-instructions">
-          Choose a start and end date for the time frame of the statistics.
-        </p>
-        <div className="calender-row">
-          <div style={{ marginRight: "20px" }}>
-            <p>Select Start Date:</p>
-            <Calender onDateChange={handleStartDateChange} />
-          </div>
-          <div>
-            <p>Select End Date:</p>
-            <Calender onDateChange={handleEndDateChange} />
-          </div>
+    <>
+      <SnackbarAlert
+        open={showDateErrorAlert}
+        message="Please ensure the end date is after the start date."
+        onClose={closeErrorAlert}
+        severity="error"
+      />
+      <div className="wrapper statistics-wrapper-height">
+        <div className="header">
+          <h1>Statistics</h1>
         </div>
-        <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
-          Get Statistics
-        </Button>
-        <hr />
-        <h2 className="section-title">Exchange Rates Percent Change</h2>
-        <PercentChange buyPercentChange={buyPercentChange} sellPercentChange={sellPercentChange} />
-        <hr />
 
-        <h2 className="section-title">Number of Transactions</h2>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <span style={{ margin: "0 10px" }}>
-            <RateCard
-              className="rate-card"
-              rate={numberTransactionsSellUsd}
-              isQuantity={true}
-              exchange_direction={transactionType.UsdToLbp}
-            />
-          </span>
-          <span style={{ margin: "0 10px" }}>
-            <RateCard
-              className="rate-card"
-              rate={numberTransactionsBuyUsd}
-              isQuantity={true}
-              exchange_direction={transactionType.LbpToUsd}
-            />
-          </span>
+        <div className="wrapper-content">
+          <h2 className="section-title">Choose a Time Frame</h2>
+          <p className="my-exchanges-instructions">
+            Choose a start and end date for the time frame of the statistics.
+          </p>
+          <div className="calender-row">
+            <div style={{ marginRight: "20px" }}>
+              <p>Select Start Date:</p>
+              <Calender onDateChange={handleStartDateChange} />
+            </div>
+            <div>
+              <p>Select End Date:</p>
+              <Calender onDateChange={handleEndDateChange} />
+            </div>
+          </div>
+          <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
+            Get Statistics
+          </Button>
+          <hr />
+          <h2 className="section-title">Exchange Rates Percent Change</h2>
+          <PercentChange
+            buyPercentChange={buyPercentChange}
+            sellPercentChange={sellPercentChange}
+          />
+          <hr />
+
+          <h2 className="section-title">Number of Transactions</h2>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <span style={{ margin: "0 10px" }}>
+              <RateCard
+                className="rate-card"
+                rate={numberTransactionsSellUsd}
+                isQuantity={true}
+                exchange_direction={transactionType.UsdToLbp}
+              />
+            </span>
+            <span style={{ margin: "0 10px" }}>
+              <RateCard
+                className="rate-card"
+                rate={numberTransactionsBuyUsd}
+                isQuantity={true}
+                exchange_direction={transactionType.LbpToUsd}
+              />
+            </span>
+          </div>
+          <hr />
+
+          <h2 className="section-title">Exchange Rates vs. Time Over</h2>
+          <RateGraph
+            className="rates-graph"
+            data={fluctuationsData}
+            width={width}
+            height={height}
+          />
         </div>
-        <hr />
-
-        <h2 className="section-title">Exchange Rates vs. Time Over</h2>
-        <RateGraph className="rates-graph" data={fluctuationsData} width={width} height={height} />
       </div>
-    </div>
+    </>
   );
 }
 
