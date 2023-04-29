@@ -109,17 +109,35 @@ function Statistics(props) {
   }, []);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper statistics-wrapper-height">
       <div className="header">
         <h1>Statistics</h1>
       </div>
 
       <div className="wrapper-content">
-        <h2 className="section-title">24-Hour Exchange Rates Percent Change</h2>
+        <h2 className="section-title">Choose a Time Frame</h2>
+        <p className="my-exchanges-instructions">
+          Choose a start and end date for the time frame of the statistics.
+        </p>
+        <div className="calender-row">
+          <div style={{ marginRight: "20px" }}>
+            <p>Select Start Date:</p>
+            <Calender onDateChange={handleStartDateChange} />
+          </div>
+          <div>
+            <p>Select End Date:</p>
+            <Calender onDateChange={handleEndDateChange} />
+          </div>
+        </div>
+        <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
+          Get Statistics
+        </Button>
+        <hr />
+        <h2 className="section-title">Exchange Rates Percent Change</h2>
         <PercentChange buyPercentChange={buyPercentChange} sellPercentChange={sellPercentChange} />
         <hr />
 
-        <h2 className="section-title">Number of Transactions in the Last 24 Hours</h2>
+        <h2 className="section-title">Number of Transactions</h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <span style={{ margin: "0 10px" }}>
             <RateCard
@@ -140,22 +158,8 @@ function Statistics(props) {
         </div>
         <hr />
 
-        <h2 className="section-title">Exchange Rates vs. Time Over Last Month</h2>
+        <h2 className="section-title">Exchange Rates vs. Time Over</h2>
         <RateGraph className="rates-graph" data={fluctuationsData} width={width} height={height} />
-
-        <div className="calender-row">
-          <div style={{ marginRight: "20px" }}>
-            <p>Select Start Date:</p>
-            <Calender onDateChange={handleStartDateChange} />
-          </div>
-          <div>
-            <p>Select End Date:</p>
-            <Calender onDateChange={handleEndDateChange} />
-          </div>
-        </div>
-        <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
-          Render Graph
-        </Button>
       </div>
     </div>
   );

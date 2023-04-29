@@ -1,3 +1,4 @@
 .pending-offers-container {
-    height: 145vh;
+    min-height: 100vh;
+    padding-bottom: 5vh;
 }

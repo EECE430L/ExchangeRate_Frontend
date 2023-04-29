@@ -67,7 +67,7 @@ function OfferTransaction({ onSubmit }) {
     setRequestCurrency("");
   }
 
-  function closeAlert() {
+  function closeErrorAlert() {
     setMissingInput(false);
     setNonNumericInput(false);
   }
@@ -78,13 +78,13 @@ function OfferTransaction({ onSubmit }) {
       <SnackbarAlert
         open={missingInput}
         message="Please fill in all inputs before submitting the form."
-        onClose={closeAlert}
+        onClose={closeErrorAlert}
         severity="error"
       />
       <SnackbarAlert
         open={nonNumericInput}
         message="Please only input positive numbers."
-        onClose={closeAlert}
+        onClose={closeErrorAlert}
         severity="error"
       />
 

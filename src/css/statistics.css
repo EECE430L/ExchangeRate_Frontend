@@ -2,8 +2,8 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    height: 169vh;
     border: 0.3vh groove rgb(0, 33, 65);
+    padding-bottom: 5vh;
 }
 
 .wrapper-content {
@@ -14,6 +14,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.statistics-wrapper-height {
+    min-height: 100vh;
 }
 
 .header {
