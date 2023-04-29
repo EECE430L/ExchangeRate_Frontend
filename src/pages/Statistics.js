@@ -16,8 +16,8 @@ function Statistics(props) {
   let [buyPercentChange, setBuyPercentChange] = useState(0);
   let [sellPercentChange, setSellPercentChange] = useState(0);
   let [fluctuationsData, setFluctuationsData] = useState([]);
-  let [startDate, setStartDate] = useState(null);
-  let [endDate, setEndDate] = useState(null);
+  let [startDate, setStartDate] = useState(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+  let [endDate, setEndDate] = useState(new Date());
   let [invalidDates, setInvalidDates] = useState(false);
   let [showDateErrorAlert, setShowDateErrorAlert] = useState(false);
   const [width, setWidth] = useState(620);
@@ -35,6 +35,8 @@ function Statistics(props) {
     if (startDate != null && endDate != null) {
       if (startDate >= endDate) {
         setInvalidDates(true);
+      } else {
+        setInvalidDates(false);
       }
     }
   }, [startDate, endDate]);
@@ -104,10 +106,18 @@ function Statistics(props) {
   useEffect(() => {
     fetchPercentChange();
     fetchNumberTransactions();
+    fetchFluctuations(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate(),
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
   }, []);
 
   // I wanted to set the width and height property of the graph based on the size of the wrapper-content div
-  // since LineChart expects fixed values for the dimensions, so I could not use simple CSS,
+  // since LineChart expects fixed values in px for the dimensions, so I could not use simple CSS,
   // so I used ChatGPT to learn how to get the size of the div and add an event listener to resize it
   useEffect(() => {
     function handleResize() {
@@ -148,11 +158,11 @@ function Statistics(props) {
           <div className="calender-row">
             <div style={{ marginRight: "20px" }}>
               <p>Select Start Date:</p>
-              <Calender onDateChange={handleStartDateChange} />
+              <Calender initialize={startDate} onDateChange={handleStartDateChange} />
             </div>
             <div>
               <p>Select End Date:</p>
-              <Calender onDateChange={handleEndDateChange} />
+              <Calender initialize={endDate} onDateChange={handleEndDateChange} />
             </div>
           </div>
           <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
