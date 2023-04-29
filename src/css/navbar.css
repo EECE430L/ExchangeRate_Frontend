@@ -32,7 +32,7 @@ ul {
 
 .nav-brand {
   font-size: 2rem;
-
+  white-space: nowrap;
   font-weight: bold !important;
 }
 
