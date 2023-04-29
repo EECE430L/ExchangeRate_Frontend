@@ -110,7 +110,6 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
               <TextField
                 variant="outlined"
                 className="amount-textfield"
-                fullWidth
                 placeholder="Enter amount to convert"
                 value={convertValue}
                 onChange={handleConvertValueChange}
@@ -133,7 +132,6 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
               <TextField
                 variant="outlined"
                 className="amount-textfield"
-                fullWidth
                 placeholder="Result"
                 InputProps={{
                   readOnly: true,

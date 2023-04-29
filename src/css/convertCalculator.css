@@ -39,8 +39,14 @@
 }
 
 .amount-textfield {
-    width: 20vw !important;
+    min-width: 20vw !important;
  }
+
+ @media (max-width: 803px) {
+    .amount-textfield {
+        max-width: 35vw;
+     }
+}
 
 .amount-textfield input {
     background-color: white;
