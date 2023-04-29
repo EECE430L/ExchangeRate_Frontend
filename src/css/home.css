@@ -4,7 +4,15 @@ h2 {
 
 .rate-card{
     width: 13vw;
+    min-width: 5vw;
     height: auto;
+}
+
+@media (max-width: 805px) {
+    .rate-card {
+        min-width: 30vw;
+        min-height: auto;
+    }
 }
 
 .home-card-title {
@@ -37,13 +45,27 @@ h2 {
 }
 
 .home-card-rates-title {
-    width: 45vw;
+    width: 60vw;
+    min-width: 53vw;
     height: 7vh;
 }
 
+@media (max-width: 805px) {
+    .home-card-rates-title {
+        min-width: 100vw;
+    }
+}
+
 .home-card-rates {
-    width: 45vw;
+    width: 60vw;
+    min-width: 53vw;
     height: 28vh;
+}
+
+@media (max-width: 805px) {
+    .home-card-rates {
+        min-width: 100vw;
+    }
 }
 
 .home-card-converter-title {
@@ -51,7 +73,19 @@ h2 {
     height: 7vh;
 }
 
+@media (max-width: 805px) {
+    .home-card-converter-title {
+        min-width: 100vw;
+    }
+}
+
 .home-card-converter {
     width: 63vw;
     height: 30vh;
+}
+
+@media (max-width: 805px) {
+    .home-card-converter {
+        min-width: 100vw;
+    }
 }

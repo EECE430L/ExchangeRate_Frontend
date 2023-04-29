@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+@media (max-width: 803px) {
+    .flex-parent-element {
+      flex-direction: column;
+    }
+  }
+
 .flex-child-element {
     flex: 1;
     margin: 3vh;
@@ -10,13 +16,25 @@
     height: 62vh;
 }
 
-.flex-child-body{
+.flex-child-body {
     border: 0.3vh groove rgb(0, 33, 65);
     background-color: white;
     border-radius: 1vh;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    height: 53vh;
+    height: 65vh;
+}
+
+@media (max-width: 803px) {
+    .record-transaction-resize {
+        height: 55vh;
+    }
+}
+
+@media (max-width: 803px) {
+    .offer-transaction-resize {
+        height: 65vh;
+    }
 }
 
 .my-exchanges-instructions {
@@ -25,3 +43,6 @@
     margin: 2vw;
 }
 
+.center-record-component {
+    padding-bottom: 3.3vw !important;
+}

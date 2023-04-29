@@ -1,18 +1,31 @@
 .form-row {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5vh;
 }
+  
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+    padding: 5px;
+}
+  
+.textfield-and-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5vh;
+}
+
+.request-textfield {
+    margin-right: 0.5vw;
+  }
 
 .request-label {
     margin-right: 1.5vw !important;
-    margin-top: 1.5vh !important;
     white-space: nowrap;
-}
-
-.request-textfield{
-    width: 16vw;
-    margin-right: 1.5vw !important;
-    margin-bottom: 2vh !important;
 }
 
 .request-other-currency {
@@ -20,8 +33,14 @@
     margin-top: 2vh !important;
 }
 
-.username-row {
+.container-column {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 5vw;
+    align-items: center;
+    gap: 2vh;
+}
+
+.offer-currency-menu {
+    margin-left: 3.2vw !important;
 }

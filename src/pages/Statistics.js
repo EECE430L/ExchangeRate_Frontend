@@ -187,7 +187,7 @@ function Statistics(props) {
           </div>
           <hr />
 
-          <h2 className="section-title">Exchange Rates vs. Time Over</h2>
+          <h2 className="section-title">Exchange Rates vs. Time</h2>
           <RateGraph
             className="rates-graph"
             data={fluctuationsData}

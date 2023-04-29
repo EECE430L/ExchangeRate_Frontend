@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40vw;
+    width: 100%;
 }
 
 .menu-row {
@@ -20,14 +20,34 @@
     align-items: center;
 }
 
+@media (max-width: 803px) {
+    .button-row {
+        padding-top: 2vh;
+    }
+  }
+
 .currency-label {
     display: inline-block;
     width: 8vw;
+    white-space: nowrap;
 }
 
+@media (max-width: 803px) {
+    .currency-label {
+        margin-right: 7vw !important;
+    }
+  }
+
 .amount-textfield {
-    width: 20vw !important;
+    width: 15vw !important;
+    margin-right: 8vw !important;
 }
+
+@media (max-width: 803px) {
+    .amount-textfield {
+        width: 50vw !important;
+    }
+  }
 
 .record-transaction-button {
     background-color: rgb(0, 33, 65) !important;

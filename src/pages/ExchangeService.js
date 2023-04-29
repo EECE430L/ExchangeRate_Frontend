@@ -143,8 +143,8 @@ function ExchangeService() {
           <div className="header">
             <h1>Record an Exchange</h1>
           </div>
-          <div className="flex-child-body">
-            <p className="my-exchanges-instructions">
+          <div className="flex-child-body record-transaction-resize">
+            <p className="my-exchanges-instructions center-record-component">
               To record an exchange you made, please input the amounts of each currency that were
               exchanged in your transaction. Then, select the type of the exchange.
             </p>
@@ -155,7 +155,7 @@ function ExchangeService() {
           <div className="header">
             <h1>Offer Transaction to User</h1>
           </div>
-          <div className="flex-child-body">
+          <div className="flex-child-body offer-transaction-resize">
             <p className="my-exchanges-instructions">
               To offer a transaction to a user, please input their username, the amount you are
               offering and in which currency, and the amount you are requesting.

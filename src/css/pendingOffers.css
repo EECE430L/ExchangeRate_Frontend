@@ -2,3 +2,9 @@
     min-height: 100vh;
     padding-bottom: 5vh;
 }
+
+@media (max-width: 805px) {
+    .pending-offers-container {
+        min-width: 100vw;
+    }
+  }

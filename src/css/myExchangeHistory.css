@@ -2,3 +2,9 @@
     width: 70vw;
     min-height: 60vh;
 }
+
+@media (max-width: 805px) {
+    .user-transactions-table-container {
+        min-width: 100vw;
+    }
+  }

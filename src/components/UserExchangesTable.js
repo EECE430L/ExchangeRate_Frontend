@@ -56,7 +56,7 @@ function UserExchangesTable({ data }) {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ height: "400px" }}>
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650, ...styles.topRow }} aria-label="simple table">
         <TableHead>
           <TableRow>

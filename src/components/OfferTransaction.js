@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../css/offerTransaction.css";
-import { transactionType } from "../enums/transactionType";
 import {
   Button,
   TextField,
@@ -90,89 +89,93 @@ function OfferTransaction({ onSubmit }) {
         severity="error"
       />
 
-      <div className="username-row">
-        <div>
-          <Typography variant="subtitle4" className="currency-label request-label">
-            Recipient username:
-          </Typography>
+      <div className="container-column">
+        <div className="textfield-and-label">
+          <div>
+            <Typography variant="subtitle4" className="currency-label request-label">
+              Recipient username:
+            </Typography>
+          </div>
+          <TextField
+            className="request-textfield"
+            variant="outlined"
+            label="Enter username of recipient"
+            value={recipientUsername}
+            onChange={handleRecipientUsernameChange}
+          />
         </div>
-        <TextField
-          className="request-textfield"
-          variant="outlined"
-          label="Enter username of recipient"
-          value={recipientUsername}
-          onChange={handleRecipientUsernameChange}
-        />
-      </div>
 
-      <div className="form-row">
-        <div>
-          <Typography variant="subtitle4" align="center" className="currency-label request-label">
-            I'm offering:
-          </Typography>
+        <div className="form-row">
+          <div>
+            <Typography variant="subtitle4" align="center" className="currency-label request-label">
+              I'm offering:
+            </Typography>
+          </div>
+          <div className="input-container">
+            <TextField
+              className="request-textfield"
+              variant="outlined"
+              label="Enter amount of your offer"
+              value={offerAmount}
+              onChange={handleOfferAmountChange}
+            />
+            <FormControl sx={{ width: 120 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">Currency</InputLabel>
+              <Select
+                label="Exchange Type"
+                value={offerCurrency}
+                onChange={handleOfferCurrencyChange}
+                autoWidth
+              >
+                <MenuItem value={"USD"}>USD</MenuItem>
+                <MenuItem value={"LBP"}>LBP</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </div>
-        <TextField
-          className="request-textfield"
-          variant="outlined"
-          label="Enter amount of your offer"
-          value={offerAmount}
-          onChange={handleOfferAmountChange}
-        />
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-autowidth-label">Currency</InputLabel>
-          <Select
-            label="Exchange Type"
-            value={offerCurrency}
-            onChange={handleOfferCurrencyChange}
-            autoWidth
+
+        <div className="form-row">
+          <div>
+            <Typography variant="subtitle4" align="center" className="currency-label request-label">
+              I want:
+            </Typography>
+          </div>
+          <div className="input-container">
+            <TextField
+              className="request-textfield"
+              variant="outlined"
+              label="Enter amount requested"
+              value={requestAmount}
+              onChange={handleRequestAmountChange}
+            />
+            <Typography
+              variant="subtitle4"
+              align="center"
+              className="currency-label request-other-currency"
+            >
+              {requestCurrency}
+            </Typography>
+          </div>
+        </div>
+
+        <div className="offer-button-row">
+          <Button
+            className="record-transaction-button"
+            variant="contained"
+            size="large"
+            onClick={handleOfferButtonClick}
           >
-            <MenuItem value={"USD"}>USD</MenuItem>
-            <MenuItem value={"LBP"}>LBP</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-
-      <div className="form-row">
-        <div>
-          <Typography variant="subtitle4" align="center" className="currency-label request-label">
-            I want:
-          </Typography>
+            Offer
+          </Button>
+          <Button
+            className="record-transaction-button"
+            variant="contained"
+            size="large"
+            onClick={handleClearButtonClick}
+          >
+            Clear
+          </Button>
         </div>
-        <TextField
-          className="request-textfield"
-          variant="outlined"
-          label="Enter amount of your offer"
-          value={requestAmount}
-          onChange={handleRequestAmountChange}
-        />
-        <Typography
-          variant="subtitle4"
-          align="center"
-          className="currency-label request-other-currency"
-        >
-          {requestCurrency}
-        </Typography>
-      </div>
-
-      {/* source for drop-down menu: https://mui.com/material-ui/react-select/ */}
-      <div className="menu-row"></div>
-      <div className="button-row">
-        <Button
-          className="record-transaction-button"
-          variant="contained"
-          size="large"
-          onClick={handleOfferButtonClick}
-        >
-          Offer
-        </Button>
-        <Button
-          className="record-transaction-button"
-          variant="contained"
-          size="large"
-          onClick={handleClearButtonClick}
-        >
-          Clear
-        </Button>
       </div>
     </>
   );
