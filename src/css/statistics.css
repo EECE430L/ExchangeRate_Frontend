@@ -62,7 +62,7 @@ hr {
     display: flex;
 }
 
-.render-graph-button {
+.get-statistics-button {
     color: white !important;
     padding: 22px !important;
     padding-top: 8px !important;
@@ -71,6 +71,6 @@ hr {
     background-color: rgb(0, 33, 65) !important;
 }
 
-.render-graph-button:hover {
+.get-statistics-button:hover {
     background-color: rgb(35, 80, 128) !important;
 }

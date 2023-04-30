@@ -42,15 +42,24 @@ function Statistics(props) {
     }
   }, [startDate, endDate]);
 
-  async function handleRenderGraphButtonClick() {
-    if (!startDate || !endDate) {
-      return;
-    }
-    if (invalidDates) {
-      setShowDateErrorAlert(true);
-      return;
-    }
-    await fetchFluctuations(
+  async function getStatistics() {
+    fetchPercentChange(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate(),
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
+    fetchNumberTransactions(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate(),
+      endDate.getFullYear(),
+      endDate.getMonth() + 1,
+      endDate.getDate()
+    );
+    fetchFluctuations(
       startDate.getFullYear(),
       startDate.getMonth() + 1,
       startDate.getDate(),
@@ -60,9 +69,35 @@ function Statistics(props) {
     );
   }
 
-  async function fetchNumberTransactions() {
+  useEffect(() => {
+    (async () => {
+      await getStatistics();
+    })();
+  }, []);
+
+  async function handleGetStatisticsButtonClick() {
+    if (!startDate || !endDate) {
+      return;
+    }
+    if (invalidDates) {
+      setShowDateErrorAlert(true);
+      return;
+    }
+    await getStatistics();
+  }
+
+  async function fetchNumberTransactions(
+    startYear,
+    startMonth,
+    startDay,
+    endYear,
+    endMonth,
+    endDay
+  ) {
     try {
-      const response = await fetch(`${baseUrl}/statistics/todays-transactions`);
+      const response = await fetch(
+        `${baseUrl}/statistics/todays-transactions?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
+      );
       const data = await response.json();
       setNumberTransactionsBuyUsd(data.num_lbp_to_usd_transactions);
       setNumberTransactionsSellUsd(data.num_usd_to_lbp_transactions);
@@ -78,9 +113,11 @@ function Statistics(props) {
     }
   }
 
-  async function fetchPercentChange() {
+  async function fetchPercentChange(startYear, startMonth, startDay, endYear, endMonth, endDay) {
     try {
-      const response = await fetch(`${baseUrl}/statistics/rates-percent-change`);
+      const response = await fetch(
+        `${baseUrl}/statistics/rates-percent-change?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
+      );
       const data = await response.json();
       setBuyPercentChange(data.percent_change_LBP_to_USD);
       setSellPercentChange(data.percent_change_USD_to_LBP);
@@ -110,19 +147,6 @@ function Statistics(props) {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    fetchPercentChange();
-    fetchNumberTransactions();
-    fetchFluctuations(
-      startDate.getFullYear(),
-      startDate.getMonth() + 1,
-      startDate.getDate(),
-      endDate.getFullYear(),
-      endDate.getMonth() + 1,
-      endDate.getDate()
-    );
-  }, []);
 
   // I wanted to set the width and height property of the graph based on the size of the wrapper-content div
   // since LineChart expects fixed values in px for the dimensions, so I could not use simple CSS,
@@ -173,7 +197,7 @@ function Statistics(props) {
               <Calender initialize={endDate} onDateChange={handleEndDateChange} />
             </div>
           </div>
-          <Button className="render-graph-button" onClick={handleRenderGraphButtonClick}>
+          <Button className="get-statistics-button" onClick={handleGetStatisticsButtonClick}>
             Get Statistics
           </Button>
           <hr />
