@@ -12,6 +12,7 @@ function Home() {
   let [buyUsdRate, setBuyUsdRate] = useState("Not available");
   let [sellUsdRate, setSellUsdRate] = useState("Not available");
   let [showAlert, setShowAlert] = useState(false);
+  let [announceRates, setAnnounceRates] = useState("");
   const { accountLoginSuccess, accountCreationSuccess, setAccountLoginSuccess } =
     useContext(AuthContext);
 
@@ -23,6 +24,11 @@ function Home() {
         const data = await response.json();
         setBuyUsdRate(data.lbp_to_usd);
         setSellUsdRate(data.usd_to_lbp);
+        setAnnounceRates(
+          `Today's exchange rates are: USD to LBP: ${
+            data.lbp_to_usd !== 0 ? data.lbp_to_usd : "Not available"
+          } and LBP to USD: ${data.usd_to_lbp !== 0 ? data.usd_to_lbp : "Not available"}`
+        );
       } catch (error) {
         console.error(error);
       }
@@ -49,7 +55,7 @@ function Home() {
       <div>
         <h2 className="home-card-rates-title home-card-title">Today's Exchange Rates</h2>
       </div>
-      <div className="home-card home-card-rates">
+      <div className="home-card home-card-rates" aria-label={announceRates}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <span style={{ margin: "0 10px" }}>
             <RateCard
@@ -61,7 +67,6 @@ function Home() {
           </span>
           <span style={{ margin: "0 10px" }}>
             <RateCard
-              className="rate-card"
               rate={buyUsdRate}
               isQuantity={false}
               exchange_direction={transactionType.LbpToUsd}

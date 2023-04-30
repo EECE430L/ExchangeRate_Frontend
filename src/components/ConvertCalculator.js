@@ -18,6 +18,8 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
   let [resultValue, setResultValue] = useState("");
   let [conversionType, setConversionType] = useState(transactionType.UsdToLbp);
   let [nonNumericInput, setNonNumericInput] = useState(false);
+  let [announceSwitchConversion, setAnnounceSwitchConversion] = useState("");
+  let [announceConversionResult, setAnnounceConversionResult] = useState("");
 
   //source: https://stackoverflow.com/questions/58584258/too-many-re-renders-with-react-hooks
   useEffect(() => {
@@ -41,8 +43,10 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
   const handleSwitchConversionClick = () => {
     if (conversionType === transactionType.UsdToLbp) {
       setConversionType(transactionType.LbpToUsd);
+      setAnnounceSwitchConversion("Now converting LBP to USD");
     } else {
       setConversionType(transactionType.UsdToLbp);
+      setAnnounceSwitchConversion("Now converting USD to LBP");
     }
     setConvertValue("");
     setResultValue("");
@@ -64,14 +68,24 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
     if (conversionType === transactionType.UsdToLbp) {
       if (usdToLbpRate == "0") {
         setResultValue("Rate not available at this time");
+        setAnnounceConversionResult("USD rate not available at this time to make the conversion");
       } else {
-        setResultValue((parseFloat(convertValue) * usdToLbpRate).toString());
+        const result = (parseFloat(convertValue) * usdToLbpRate).toString();
+        setResultValue(result);
+        setAnnounceConversionResult(
+          `Your conversion result: ${convertValue} USD equals ${result} LBP.`
+        );
       }
     } else {
       if (lbpToUsdRate === "0") {
         setResultValue("Rate not available at this time");
+        setAnnounceConversionResult("LBP rate not available at this time to make the conversion");
       } else {
-        setResultValue((parseFloat(convertValue) / lbpToUsdRate).toString());
+        const result = (parseFloat(convertValue) / lbpToUsdRate).toString();
+        setResultValue(result);
+        setAnnounceConversionResult(
+          `Your conversion result: ${convertValue} LBP equals ${result} USD.`
+        );
       }
     }
   };
@@ -117,6 +131,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
             </Grid>
             <Grid item xs={1} style={{ padding: 0 }}>
               <Button
+                aria-label={announceSwitchConversion}
                 variant="outlined"
                 onClick={handleSwitchConversionClick}
                 className={"switch-conversion-button"}
@@ -143,6 +158,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
         </Grid>
         <Grid item xs={12} align="center">
           <Button
+            aria-label={announceConversionResult}
             className="convert-button"
             variant="contained"
             size="large"

@@ -22,6 +22,7 @@ function Statistics(props) {
   let [showDateErrorAlert, setShowDateErrorAlert] = useState(false);
   const [width, setWidth] = useState(620);
   const [height, setHeight] = useState(500);
+  let [announceNumberTransactions, setAnnounceNumberTransactions] = useState("");
 
   function handleStartDateChange(date) {
     setStartDate(date);
@@ -65,6 +66,13 @@ function Statistics(props) {
       const data = await response.json();
       setNumberTransactionsBuyUsd(data.num_lbp_to_usd_transactions);
       setNumberTransactionsSellUsd(data.num_usd_to_lbp_transactions);
+      setAnnounceNumberTransactions(
+        `Between ${startDate.toLocaleDateString()} and ${endDate.toLocaleDateString()} there were ${
+          data.num_usd_to_lbp_transactions
+        } USD to LBP transactions made, and ${
+          data.num_lbp_to_usd_transactions
+        } LBP to USD transactions made`
+      );
     } catch (error) {
       console.error(error);
     }
@@ -178,7 +186,7 @@ function Statistics(props) {
 
           <h2 className="section-title">Number of Transactions</h2>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <span style={{ margin: "0 10px" }}>
+            <span style={{ margin: "0 10px" }} aria-label={announceNumberTransactions}>
               <RateCard
                 className="rate-card"
                 rate={numberTransactionsSellUsd}
