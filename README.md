@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# InflateRates ReactJS Website
+The React app is hosted on Cloudflare and can be viewed on [this link](https://inflate-rates.pages.dev/).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setting Up and Running the React App
 
-## Available Scripts
+1) Clone the repository
+2) Open the repository in your preferred IDE or code editor
+3) Open the terminal in the directory of the project
+4) Run the command `npm install` to install all dependencies referenced in `package.json`
+5) Run the command `npm start` to run the app locally in development mode
+6) Open http://localhost:3000 to view it in your browser
 
-In the project directory, you can run:
+## Project Structure
+The `src` parent folder contains the primary source code of the React app. Within it are the following folders with their corresponding purpose outlined below:
 
-### `npm start`
+| Folder    | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `components`| Contains all generic and reusable UI components used. The components are isolated from the Fetch API—they solely take, manipulate and display data. |
+| `config`    | Contains configuration files, namely for the API endpoints. Currently, it only contains one file that defines the base URL to be used for all Fetch calls in the React app. |
+| `context`   | Contains the created React contexts to be provided and consumed.   |
+| `css`       | Contains CSS files used to style the pages and components in the React app.              |
+| `enums`     | Contains enumerations used in the React app, such as one defining the *TransactionType*.|
+| `media`     | Contains media files used in the React app, such as images of the country flags and the **InflateRates** logo. |
+| `pages`     | Contains the parent pages that house the components and handle the Fetch API calls. |
+| `utility`   | Contains utility functions, such as local storage manipulation. |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The `src` folder also contains the `App.js` file, which acts as the context provider, houses the global navigation bar and relates `Routes` to a specific page in `pages`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
+Code segments used from or inspired by outside sources are referenced with specific in comments in the source code directly. The primary sources can be seen below:
+* [Stack Overflow](https://stackoverflow.com/)
+* [DEV Community](https://dev.to/)
+* [GeeksforGeeks](https://www.geeksforgeeks.org/)
+* [MUI](https://mui.com/)
+* [npm](https://www.npmjs.com/)
