@@ -96,7 +96,7 @@ function Statistics(props) {
   ) {
     try {
       const response = await fetch(
-        `${baseUrl}/statistics/todays-transactions?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
+        `${baseUrl}/statistics/number-transactions?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
       );
       const data = await response.json();
       setNumberTransactionsBuyUsd(data.num_lbp_to_usd_transactions);
