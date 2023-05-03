@@ -25,9 +25,9 @@ function Home() {
         setBuyUsdRate(data.lbp_to_usd);
         setSellUsdRate(data.usd_to_lbp);
         setAnnounceRates(
-          `Today's exchange rates are: USD to LBP: ${
-            data.lbp_to_usd !== 0 ? data.lbp_to_usd : "Not available"
-          } and LBP to USD: ${data.usd_to_lbp !== 0 ? data.usd_to_lbp : "Not available"}`
+          `Today's exchange rates are: USD to LBP:  ${
+            data.usd_to_lbp !== 0 ? data.usd_to_lbp : "Not available"
+          }and LBP to USD: ${data.lbp_to_usd !== 0 ? data.lbp_to_usd : "Not available"}`
         );
       } catch (error) {
         console.error(error);
