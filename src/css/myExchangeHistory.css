@@ -1,21 +1,38 @@
 .user-transactions-table-container {
-    width: 70vw;
-    min-height: 60vh;
+  width: 70vw;
+  min-height: 60vh;
 }
 
 @media (max-width: 805px) {
-    .user-transactions-table-container {
-        min-width: 100vw;
-    }
+  .user-transactions-table-container {
+    min-width: 100vw;
+  }
 }
 
 h1 {
-    white-space: nowrap;
-    font-size: 2vw;
+  white-space: nowrap;
+  font-size: 2vw;
 }
 
 @media (max-width: 805px) {
-    h1 {
-        font-size: 4vw;
-    }
+  h1 {
+    font-size: 4vw;
+  }
+}
+
+.export-button-container {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.export-by-email-button {
+  background-color: rgb(0, 33, 65) !important;
+  margin: 1vw !important;
+  color: white !important;
+  margin-top: 4vh !important;
+  margin-bottom: 0 !important;
+}
+
+.export-by-email-button:hover {
+  background-color: rgb(35, 80, 128) !important;
 }
