@@ -34,6 +34,7 @@ function OfferTransaction({ onSubmit }) {
     setOfferCurrency(event.target.value);
   }
 
+  //change other currency automatically upon selecting currency in drop down menu
   useEffect(() => {
     if (offerCurrency === "USD") {
       setRequestCurrency("LBP");
@@ -56,8 +57,8 @@ function OfferTransaction({ onSubmit }) {
       setNonNumericInput(true);
       return;
     }
-
-    onSubmit(recipientUsername, usdToLbp, offerAmount, requestAmount);
+    //call passed API function from ExchangeService page on the selected amounts
+    onSubmit(recipientUsername, usdToLbp, parseFloat(offerAmount), parseFloat(requestAmount));
   }
 
   function handleClearButtonClick() {
@@ -119,6 +120,7 @@ function OfferTransaction({ onSubmit }) {
               value={offerAmount}
               onChange={handleOfferAmountChange}
             />
+            {/* source: https://mui.com/material-ui/react-select/ */}
             <FormControl sx={{ width: 120 }}>
               <InputLabel id="demo-simple-select-autowidth-label">Currency</InputLabel>
               <Select

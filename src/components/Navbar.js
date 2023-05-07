@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   //source: navbar style, css and responsiveness animation inspired by an old project I did in EECE 437
+  //which used this Youtube video: https://youtu.be/ZJZVCg2lXSc
   let [showBars, setShowBars] = useState(false);
   let [active, setActive] = useState("nav-menu");
   let [icon, setIcon] = useState("nav-toggler");
@@ -23,6 +24,7 @@ function Navbar() {
     navigate("/");
   }
 
+  //handle nav bar minimize when window shrinks
   function navToggle() {
     if (active === "nav-menu") {
       setActive("nav-menu nav-active");

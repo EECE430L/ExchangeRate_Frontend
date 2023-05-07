@@ -15,6 +15,7 @@ function PendingOffers() {
   const { logout } = useContext(AuthContext);
   let navigate = useNavigate();
 
+  //API call when page is loaded to get all user's offers
   useEffect(() => {
     fetchIncomingOffers();
     fetchOutgoingOffers();

@@ -3,6 +3,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from "r
 import moment from "moment";
 
 function RateGraph({ data, width, height }) {
+  //reformat x-axis labels to not show time, but be of the form Month ##, Year
   const formatDate = (date) => {
     return moment(date).format("MMM DD, YYYY");
   };

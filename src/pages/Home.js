@@ -16,7 +16,7 @@ function Home() {
   const { accountLoginSuccess, accountCreationSuccess, setAccountLoginSuccess } =
     useContext(AuthContext);
 
-  //API call in useEffect to ensure that exchange rates fetched before component is rendered
+  //API call in useEffect to fetch exchange rates before component is rendered
   useEffect(() => {
     async function fetchExchangeRates() {
       try {
@@ -40,6 +40,7 @@ function Home() {
     setAccountLoginSuccess(false);
   }
 
+  //show the alert of successful login on home page if navigated to here from login
   useEffect(() => {
     setShowAlert(accountLoginSuccess && !accountCreationSuccess);
   }, [accountLoginSuccess, accountCreationSuccess]);

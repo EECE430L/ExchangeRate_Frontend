@@ -84,6 +84,7 @@ function UserOffersTable({ isSender, data, handleOffer }) {
                 </TableCell>
                 {!isSender ? (
                   <TableCell align="center">
+                    {/* obtained help from Ali Jaafar to call thee onClick method with the selected id */}
                     <Button
                       variant="outlined"
                       className="reply-offer-button"
@@ -95,6 +96,7 @@ function UserOffersTable({ isSender, data, handleOffer }) {
                 ) : null}
                 {!isSender ? (
                   <TableCell align="center">
+                    {/* obtained help from Ali Jaafar to call thee onClick method with the selected id */}
                     <Button
                       variant="outlined"
                       className="reply-offer-button"

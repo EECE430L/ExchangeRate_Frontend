@@ -54,6 +54,7 @@ function ExchangeService() {
     }
   }
 
+  //API call when page is loaded to get all user's transactions
   useEffect(() => {
     fetchUserTransactions();
   }, []);

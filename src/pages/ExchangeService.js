@@ -15,10 +15,7 @@ function ExchangeService() {
   let [errorOfferTransaction, setErrorOfferTransaction] = useState(false);
   let [recipientNotFound, setRecipientNotFound] = useState(false);
   let [recipientUsernameOfferTransaction, setRecipientUsernameOfferTransaction] = useState("");
-  let [usdAmountOfferTransaction, setUsdAmountOfferTransaction] = useState("");
-  let [lbpAmountOfferTransaction, setLbpAmountOfferTransaction] = useState("");
-  let [exchangeTypeOfferTransaction, setExchangeTypeOfferTransaction] = useState("");
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   let navigate = useNavigate();
 
   async function createTransaction(lbp_amount, usd_amount, usd_to_lbp) {
@@ -73,6 +70,7 @@ function ExchangeService() {
     }
   }
 
+  //same as above, this is passed to the child component which holds the button
   async function handleOfferTransactionSubmit(
     receiver,
     usd_to_lbp,

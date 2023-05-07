@@ -8,6 +8,7 @@ const Calender = ({ initialize, onDateChange }) => {
 
   function handleDateChange(date) {
     setSelectedDate(date);
+    // update the state variables of start and end date using a passed function from statistics page
     onDateChange(date);
   }
 

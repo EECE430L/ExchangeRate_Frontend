@@ -21,6 +21,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
   let [announceSwitchConversion, setAnnounceSwitchConversion] = useState("");
   let [announceConversionResult, setAnnounceConversionResult] = useState("");
 
+  //when transaction type changes, switch all icons representing each currency
   //source: https://stackoverflow.com/questions/58584258/too-many-re-renders-with-react-hooks
   useEffect(() => {
     if (conversionType === transactionType.LbpToUsd) {
@@ -60,13 +61,14 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
     if (!convertValue.trim()) {
       return;
     }
+    //positive number regex check
     const numericRegex = /^\d+(\.\d+)?$/;
     if (!numericRegex.test(convertValue)) {
       setNonNumericInput(true);
       return;
     }
     if (conversionType === transactionType.UsdToLbp) {
-      if (usdToLbpRate == "0") {
+      if (!usdToLbpRate) {
         setResultValue("Rate not available at this time");
         setAnnounceConversionResult("USD rate not available at this time to make the conversion");
       } else {
@@ -77,7 +79,7 @@ function ConvertCalculator({ usdToLbpRate, lbpToUsdRate }) {
         );
       }
     } else {
-      if (lbpToUsdRate === "0") {
+      if (!lbpToUsdRate) {
         setResultValue("Rate not available at this time");
         setAnnounceConversionResult("LBP rate not available at this time to make the conversion");
       } else {

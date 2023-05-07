@@ -32,6 +32,7 @@ function Statistics(props) {
     setEndDate(date);
   }
 
+  //check for date validity (start before end)
   useEffect(() => {
     if (startDate != null && endDate != null) {
       if (startDate >= endDate) {
@@ -42,6 +43,7 @@ function Statistics(props) {
     }
   }, [startDate, endDate]);
 
+  //function to all statistics of previous week
   async function getStatistics() {
     fetchPercentChange(
       startDate.getFullYear(),
@@ -69,6 +71,7 @@ function Statistics(props) {
     );
   }
 
+  //initialize statistics to previous week upon page loading
   useEffect(() => {
     (async () => {
       await getStatistics();

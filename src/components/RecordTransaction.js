@@ -54,6 +54,7 @@ function RecordTransaction({ onSubmit }) {
       setNonNumericInput(true);
       return;
     }
+    //call the passed API function from ExchangeService on the selected values
     onSubmit(parseFloat(usdAmount), parseFloat(lbpAmount), usdToLbp);
   }
 
