@@ -52,8 +52,10 @@ const SignInPage = () => {
       return;
     }
     if (activeTab === "signIn") {
-      await login({ user_name, password });
-      navigate("/");
+      try {
+        const token = await login({ user_name, password });
+        navigate("/");
+      } catch (error) {}
     } else {
       if (!email) {
         setMissingInput(true);

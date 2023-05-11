@@ -70,30 +70,35 @@ function App() {
   }, []);
 
   const login = useCallback((credentials) => {
-    fetch(`${baseUrl}/authentication`, {
-      method: "POST",
-      body: JSON.stringify(credentials),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status == 401 || response.status == 404) {
-          setIncorrectCredentials(true);
-        }
-        if (response.ok) {
-          response.json().then((data) => {
-            setIsAuthenticated(true);
-            setAccountLoginSuccess(true);
-            saveUserToken(data.token);
-          });
-        } else {
-          throw new Error("Login failed");
-        }
+    return new Promise((resolve, reject) => {
+      fetch(`${baseUrl}/authentication`, {
+        method: "POST",
+        body: JSON.stringify(credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => {
+          if (response.status == 401 || response.status == 404) {
+            setIncorrectCredentials(true);
+            reject(new Error("Incorrect credentials"));
+          }
+          if (response.ok) {
+            response.json().then((data) => {
+              setIsAuthenticated(true);
+              setAccountLoginSuccess(true);
+              saveUserToken(data.token);
+              resolve(data.token);
+            });
+          } else {
+            throw new Error("Login failed");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error);
+        });
+    });
   }, []);
 
   const logout = useCallback(() => {
